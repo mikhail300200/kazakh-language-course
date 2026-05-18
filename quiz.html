@@ -116,10 +116,10 @@
         document.getElementById('submitBtn').disabled = true;
         if(passed) localStorage.setItem('lesson'+lessonId+'_test_passed','true');
 
-        // ============ GOOGLE SHEETS-КЕ НӘТИЖЕ ЖІБЕРУ (GET әдісі) ============
+        // ============ GOOGLE SHEETS-КЕ НӘТИЖЕ ЖІБЕРУ ============
         try {
             let user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-            let webhookUrl = "https://script.google.com/macros/s/AKfycbyyAy9DkFbSNQlKwGpkCX9qsI_RPxWzIpiJROqu9PQALLryQzZ9pPXhdSzBpMNQ5nXi/exec";
+            let webhookUrl = "https://script.google.com/macros/s/AKfycbxWF7OHEYMIDi1dTNMSY6_QDYXShvX16SL9ExxaMU-mOCTgzuxGJ6nN0c_ZZNUB-c4/exec";
             let url = webhookUrl + "?fullname=" + encodeURIComponent(user.fullname || "Құрметті оқушы") + "&email=" + encodeURIComponent(user.email || "белгісіз") + "&lessonId=" + lessonId + "&score=" + Math.round(percent);
             
             fetch(url, { method: "GET", mode: "no-cors" });
