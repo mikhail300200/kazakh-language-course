@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Кіру - Қазақ тілі курсы</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(rgba(255, 248, 225, 0.95), rgba(245, 222, 179, 0.9)), url('https://www.transparenttextures.com/patterns/kazakh-ornament.png');
+            background-size: auto, 200px;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            max-width: 450px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 245, 0.95);
+            border-radius: 60px 60px 60px 20px;
+            padding: 40px 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid #E6D3B3;
+        }
+
+        .login-container h1 {
+            font-size: 36px;
+            color: #5A3A1A;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .login-container label {
+            display: block;
+            font-size: 16px;
+            color: #4F2F10;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #DDBF8C;
+            border-radius: 30px;
+            font-size: 16px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .login-container input:focus {
+            outline: none;
+            border-color: #8B5A2B;
+            box-shadow: 0 0 5px rgba(139, 90, 43, 0.3);
+        }
+
+        .login-container button {
+            width: 100%;
+            background: #8B5A2B;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .login-container button:hover {
+            background: #5A3A1A;
+            transform: scale(1.02);
+        }
+
+        .login-container p {
+            text-align: center;
+            margin-top: 20px;
+            color: #6B4226;
+        }
+
+        .login-container a {
+            color: #8B5A2B;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-container a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h1>🔐 Кіру</h1>
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="example@email.com">
+        <label>Құпия сөз:</label>
+        <input type="password" id="password" placeholder="********">
+        <button onclick="login()">Кіру</button>
+        <p>Аккаунтыңыз жоқ па? <a href="register.html">Тіркелу</a></p>
+        <div class="back-link"><a href="index.html">← Басты бетке</a></div>
+    </div>
+    <script>
+        function login() {
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            if(email === "" || password === "") {
+                alert("Email және құпия сөзді толтырыңыз!");
+                return;
+            }
+            let userData = localStorage.getItem('user_' + email);
+            if(userData) {
+                let user = JSON.parse(userData);
+                if(user.password === password) {
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('isLoggedIn', 'true');
+                    alert("Қош келдіңіз, " + user.fullname + "!");
+                    window.location.href = "dashboard.html";
+                } else {
+                    alert("Құпия сөз қате!");
+                }
+            } else {
+                alert("Бұл email-ге тіркелген пайдаланушы жоқ!");
+            }
+        }
+    </script>
+</body>
+</html>

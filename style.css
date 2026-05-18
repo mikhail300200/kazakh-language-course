@@ -1,0 +1,157 @@
+/* style.css - ТЕЛЕФОНҒА БЕЙІМДЕЛГЕН */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url('fon.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+    padding: 10px;
+    min-height: 100vh;
+}
+
+/* Барлық контейнерлерге мобильді бейімдеу */
+.container {
+    max-width: 100%;
+    width: 100%;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    padding: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+/* Телефонда суреттер кішірейсін */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Кнопкалар үлкен (саусақпен басуға ыңғайлы) */
+button, .btn, a button {
+    background: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+    max-width: 300px;
+    margin: 8px auto;
+    display: block;
+    text-align: center;
+}
+
+button.gray {
+    background: #6c757d;
+}
+
+button.blue {
+    background: #007bff;
+}
+
+/* Сабақ карточкалары */
+.lesson-card {
+    border: 1px solid #ddd;
+    border-radius: 14px;
+    padding: 15px;
+    margin: 12px 0;
+    background: #f9f9f9;
+}
+
+/* Тест сұрақтары */
+.question-box {
+    background: #f9f9f9;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 12px;
+}
+
+.option {
+    margin: 10px 0;
+    padding: 12px;
+    background: white;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    font-size: 15px;
+}
+
+.option.selected {
+    background: #2196F3;
+    color: white;
+}
+
+/* Форма элементтері */
+input, textarea, select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+/* Тақырыптар */
+h1 {
+    font-size: 24px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+h2 {
+    font-size: 20px;
+    text-align: center;
+    color: #2c3e50;
+}
+
+/* Видео контейнер */
+.video-container {
+    position: relative;
+    width: 100%;
+    background: black;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+video {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* Сертификат беті (мобильді) */
+.certificate-container {
+    width: 100%;
+    position: relative;
+}
+
+@media (max-width: 600px) {
+    .recipient-name {
+        font-size: 16px !important;
+        top: 38% !important;
+        white-space: normal !important;
+        width: 80% !important;
+    }
+    .cert-date {
+        font-size: 10px !important;
+        bottom: 14% !important;
+    }
+    .cert-signature {
+        font-size: 10px !important;
+        bottom: 14% !important;
+    }
+}
+
+/* Басып шығару */
+@media print {
+    .btn-group, .books-section, button {
+        display: none;
+    }
+}

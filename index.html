@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Қазақ тілі курсы</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #f5ede0;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1100px; margin: 0 auto; }
+        .top-buttons { display: flex; justify-content: flex-end; gap: 15px; margin-bottom: 30px; }
+        .top-buttons a button { background: #8B5A2B; border: none; padding: 12px 28px; font-size: 16px; font-weight: bold; border-radius: 40px; color: white; cursor: pointer; transition: 0.3s; }
+        .top-buttons a button:hover { background: #5A3A1A; transform: scale(1.02); }
+        .hero { text-align: center; background: rgba(255, 255, 240, 0.9); padding: 50px 20px; border-radius: 60px 60px 60px 20px; margin-bottom: 50px; border: 1px solid rgba(210, 180, 140, 0.5); }
+        .hero h1 { font-size: 42px; color: #5A3A1A; margin-bottom: 15px; }
+        .hero .kurs-taqyryby { font-size: 22px; color: #8B5A2B; margin-bottom: 20px; font-weight: 500; }
+        .hero .description { font-size: 16px; color: #3E2A1C; max-width: 800px; margin: 0 auto 20px auto; line-height: 1.5; }
+        .hero .purpose { font-size: 16px; color: #3E2A1C; max-width: 800px; margin: 0 auto; line-height: 1.5; background: rgba(210, 180, 140, 0.3); padding: 15px; border-radius: 20px; }
+        .teachers-section { text-align: center; background: rgba(255, 255, 245, 0.9); padding: 40px 20px; border-radius: 50px; margin-bottom: 50px; border: 1px solid #E6D3B3; }
+        .teachers-section h2 { font-size: 36px; color: #6B4226; margin-bottom: 40px; border-bottom: 3px solid #C9A87C; display: inline-block; padding-bottom: 8px; }
+        .teachers-container { display: flex; justify-content: center; flex-wrap: wrap; gap: 40px; }
+        .teacher-card { background: #FFFCF8; border-radius: 40px 20px 40px 20px; padding: 25px 20px 20px; width: 240px; text-align: center; transition: 0.3s; box-shadow: 0 8px 18px rgba(0,0,0,0.1); }
+        .teacher-card:hover { transform: translateY(-8px); }
+        .teacher-card img { width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 18px; border: 4px solid #DDBF8C; }
+        .teacher-card h3 { font-size: 18px; color: #4F2F10; margin-bottom: 5px; }
+        .teacher-card p { color: #8B6946; font-size: 14px; }
+        .footer { background: #3E2A1C; border-radius: 50px 50px 30px 30px; padding: 35px 25px 25px; text-align: center; margin-top: 30px; }
+        .footer-links { display: flex; justify-content: center; gap: 35px; flex-wrap: wrap; margin-bottom: 25px; }
+        .footer-links a { color: #FFEFD6; text-decoration: none; font-size: 16px; }
+        .footer-links a:hover { text-decoration: underline; }
+        .social-icons { margin: 20px 0 15px; }
+        .social-icons a { display: inline-block; margin: 0 12px; background: #C9A87C; width: 52px; height: 52px; line-height: 52px; border-radius: 50%; font-size: 28px; text-decoration: none; color: #3E2A1C; transition: 0.3s; }
+        .social-icons a:hover { background: #F5DEB3; transform: scale(1.07); }
+        .copyright { color: #D4C0A1; font-size: 13px; border-top: 1px solid #5E442E; padding-top: 18px; margin-top: 15px; }
+        @media (max-width: 700px) {
+            .hero h1 { font-size: 28px; }
+            .hero .kurs-taqyryby { font-size: 18px; }
+            .teachers-section h2 { font-size: 28px; }
+            .teacher-card { width: 220px; }
+            .top-buttons { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="top-buttons">
+        <a href="login.html"><button>🔐 Кіру</button></a>
+        <a href="register.html"><button>📝 Тіркелу</button></a>
+    </div>
+    <div class="hero">
+        <h1>📖 Қазақ тілі курсы</h1>
+        <div class="kurs-taqyryby">“Туынды сөздерді сатылай кешенді талдау технологиясы арқылы оқыту”</div>
+        <div class="description">📌 <strong>5-сынып оқушыларына</strong> қазақ тіліндегі туынды сөздерді сатылай кешенді талдау технологиясы негізінде тиімді әрі түсінікті түрде меңгертуге арналған білім беру платформасы.</div>
+        <div class="purpose">🎯 <strong>Сайттың мақсаты</strong> – оқушылардың тілдік сауаттылығын арттыру, сөзжасам тақырыбын жүйелі түрде меңгерту және заманауи оқыту технологиясын қолдану арқылы білім сапасын арттыру.</div>
+    </div>
+    <div class="teachers-section">
+        <h2>👩‍🏫 Сайт жетекшілері</h2>
+        <div class="teachers-container">
+            <div class="teacher-card"><img src="teacher1.jpg" alt="Берікқалиқызы Жаңылсын"><h3>Берікқалиқызы Жаңылсын</h3><p>Қазақ тілі және әдебиеті</p></div>
+            <div class="teacher-card"><img src="teacher2.jpg" alt="Себепова Қарақат Жүсіпқызы"><h3>Себепова Қарақат Жүсіпқызы</h3><p>Қазақ тілі және әдебиеті</p></div>
+            <div class="teacher-card"><img src="teacher3.jpg" alt="Сотова Ғалия Мухамедьярқызы"><h3>Сотова Ғалия Мухамедьярқызы</h3><p>Қазақ тілі және әдебиеті</p></div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="footer-links"><a href="#">Басты бет</a><a href="#">Байланыс</a><a href="#">Жоба туралы</a></div>
+        <div class="social-icons"><a href="https://wa.me/77072004840" target="_blank"><i class="fab fa-whatsapp"></i></a><a href="https://t.me/kazakh_language_course" target="_blank"><i class="fab fa-telegram-plane"></i></a><a href="https://www.instagram.com/berrikovnaa" target="_blank"><i class="fab fa-instagram"></i></a></div>
+        <div class="copyright">© 2025 Қазақ тілі платформасы. Барлық құқықтар қорғалған.</div>
+    </div>
+</div>
+</body>
+</html>

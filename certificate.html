@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Сертификат - Қазақ тілі курсы</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(rgba(255, 248, 225, 0.95), rgba(245, 222, 179, 0.9)), url('https://www.transparenttextures.com/patterns/kazakh-ornament.png');
+            background-size: auto, 200px;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .certificate-container {
+            position: relative;
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        .certificate-img { width: 100%; height: auto; display: block; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .recipient-name {
+            position: absolute; top: 31%; left: 50%; transform: translate(-50%, -50%);
+            font-size: 22px; font-weight: bold; color: #1a1a2e; font-family: 'Times New Roman', serif;
+            text-align: center; white-space: nowrap; background: transparent; width: 100%;
+        }
+        .cert-date {
+            position: absolute; bottom: 23%; left: 30%; transform: translateX(-50%);
+            font-size: 14px; font-weight: bold; color: #1a1a2e; font-family: 'Times New Roman', serif;
+        }
+        .cert-signature {
+            position: absolute; bottom: 16%; right: 25%;
+            font-size: 14px; font-style: italic; color: #333; white-space: nowrap;
+        }
+        .cert-code {
+            position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%);
+            font-size: 10px; color: #888; white-space: nowrap;
+        }
+        .btn-group { text-align: center; margin-bottom: 20px; }
+        .btn-group button { background: #8B5A2B; color: white; padding: 10px 20px; border: none; border-radius: 40px; cursor: pointer; margin: 0 10px; font-size: 14px; }
+        .books-section {
+            max-width: 700px; width: 100%; margin: 30px auto; background: rgba(255, 255, 245, 0.95);
+            border-radius: 50px; padding: 25px; text-align: center; border: 1px solid #E6D3B3;
+        }
+        .book-card { display: inline-block; width: 220px; background: #FFFCF8; border-radius: 30px; padding: 15px; margin: 10px; border: 1px solid #DDBF8C; }
+        .download-btn { background: #2196F3; color: white; padding: 8px 15px; border-radius: 40px; text-decoration: none; display: inline-block; margin-top: 10px; }
+        @media (max-width: 600px) {
+            .recipient-name { font-size: 16px !important; top: 28% !important; white-space: normal !important; width: 80% !important; }
+            .cert-date { font-size: 10px !important; bottom: 20% !important; }
+            .cert-signature { font-size: 10px !important; bottom: 14% !important; }
+        }
+    </style>
+</head>
+<body>
+<div class="btn-group">
+    <button onclick="window.print()">🖨️ Сертификатты басып шығару</button>
+    <button onclick="downloadAllBooks()" style="background:#ff9800;">📚 Екі кітапшаны да жүктеу</button>
+    <button onclick="backToDashboard()">← Курс бетіне</button>
+</div>
+<div class="certificate-container">
+    <img class="certificate-img" src="certificate.jpg" alt="Сертификат" onerror="this.src='https://via.placeholder.com/700x500?text=Сертификат+суреті+жоқ'">
+    <div id="recipientName" class="recipient-name">Оқушы</div>
+    <div id="certDate" class="cert-date"></div>
+    <div class="cert-signature">______________</div>
+    <div id="certCode" class="cert-code"></div>
+</div>
+<div class="books-section">
+    <h2>📚 ТЕОРИЯЛЫҚ БАЗА</h2>
+    <div><div class="book-card"><div style="font-size:40px;">📖</div><h3>Туынды сөздер</h3><a href="Туынды_сөздер.pdf" download class="download-btn">📥 PDF жүктеу</a></div>
+    <div class="book-card"><div style="font-size:40px;">📘</div><h3>Сатылай кешенді талдау</h3><a href="Сатылай_кешенді_талдау.pdf" download class="download-btn">📥 PDF жүктеу</a></div></div>
+</div>
+<script>
+    function loadCertificate() {
+        for(let i=1; i<=6; i++) if(localStorage.getItem('lesson'+i+'_test_passed') !== 'true') { alert('Сіз әлі сертификат ала алмайсыз!'); window.location.href='dashboard.html'; return; }
+        let user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+        document.getElementById('recipientName').innerHTML = user.fullname || 'Құрметті оқушы';
+        let d = new Date();
+        let day = d.getDate().toString().padStart(2,'0'), month = (d.getMonth()+1).toString().padStart(2,'0'), year = d.getFullYear();
+        document.getElementById('certDate').innerHTML = day+'.'+month+'.'+year;
+        document.getElementById('certCode').innerHTML = 'Сертификат коды: KZ'+Date.now().toString(36).toUpperCase();
+    }
+    function downloadAllBooks() { window.location.href='Туынды_сөздер.pdf'; setTimeout(()=>window.location.href='Сатылай_кешенді_талдау.pdf',500); }
+    function backToDashboard() { window.location.href='dashboard.html'; }
+    loadCertificate();
+</script>
+</body>
+</html>

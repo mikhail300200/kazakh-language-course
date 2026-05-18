@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Тіркелу - Қазақ тілі курсы</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(rgba(255, 248, 225, 0.95), rgba(245, 222, 179, 0.9)), url('https://www.transparenttextures.com/patterns/kazakh-ornament.png');
+            background-size: auto, 200px;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-container {
+            max-width: 450px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(255, 255, 245, 0.95);
+            border-radius: 60px 60px 60px 20px;
+            padding: 40px 35px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            border: 1px solid #E6D3B3;
+        }
+
+        .register-container h1 {
+            font-size: 36px;
+            color: #5A3A1A;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .register-container label {
+            display: block;
+            font-size: 16px;
+            color: #4F2F10;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .register-container input {
+            width: 100%;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            border: 1px solid #DDBF8C;
+            border-radius: 30px;
+            font-size: 16px;
+            background: white;
+            transition: 0.3s;
+        }
+
+        .register-container input:focus {
+            outline: none;
+            border-color: #8B5A2B;
+            box-shadow: 0 0 5px rgba(139, 90, 43, 0.3);
+        }
+
+        .register-container button {
+            width: 100%;
+            background: #8B5A2B;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 40px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .register-container button:hover {
+            background: #5A3A1A;
+            transform: scale(1.02);
+        }
+
+        .register-container p {
+            text-align: center;
+            margin-top: 20px;
+            color: #6B4226;
+        }
+
+        .register-container a {
+            color: #8B5A2B;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-container a:hover {
+            text-decoration: underline;
+        }
+
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h1>📝 Тіркелу</h1>
+        <label>Толық аты-жөніңіз:</label>
+        <input type="text" id="fullname" placeholder="Аты-жөніңіз">
+        <label>Email:</label>
+        <input type="email" id="email" placeholder="example@email.com">
+        <label>Құпия сөз:</label>
+        <input type="password" id="password" placeholder="********">
+        <button onclick="register()">Тіркелу</button>
+        <p>Аккаунтыңыз бар ма? <a href="login.html">Кіру</a></p>
+        <div class="back-link"><a href="index.html">← Басты бетке</a></div>
+    </div>
+    <script>
+        function register() {
+            let fullname = document.getElementById('fullname').value;
+            let email = document.getElementById('email').value;
+            let password = document.getElementById('password').value;
+            if(fullname === "" || email === "" || password === "") {
+                alert("Барлық өрістерді толтырыңыз!");
+                return;
+            }
+            let user = { fullname: fullname, email: email, password: password };
+            localStorage.setItem('user_' + email, JSON.stringify(user));
+            alert("Тіркелу сәтті! Енді кіре аласыз.");
+            window.location.href = "login.html";
+        }
+    </script>
+</body>
+</html>

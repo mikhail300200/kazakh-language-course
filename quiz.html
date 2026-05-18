@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Тест - Қазақ тілі</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: linear-gradient(rgba(255, 248, 225, 0.95), rgba(245, 222, 179, 0.9)), url('https://www.transparenttextures.com/patterns/kazakh-ornament.png');
+            background-size: auto, 200px;
+            font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 245, 0.95);
+            border-radius: 50px;
+            padding: 30px;
+            border: 1px solid #E6D3B3;
+        }
+        h1 { color: #5A3A1A; text-align: center; margin-bottom: 25px; }
+        .question-box { background: #FFFCF8; padding: 20px; margin: 20px 0; border-radius: 30px; border: 1px solid #DDBF8C; }
+        .option { margin: 10px 0; padding: 12px; background: white; border-radius: 40px; cursor: pointer; border: 1px solid #DDBF8C; transition: 0.3s; }
+        .option.selected { background: #8B5A2B; color: white; border-color: #8B5A2B; }
+        .result-box { text-align: center; padding: 20px; border-radius: 30px; margin-top: 20px; }
+        .result-box.pass { background: #4CAF50; color: white; }
+        .result-box.fail { background: #f44336; color: white; }
+        button { background: #8B5A2B; color: white; padding: 12px 25px; border: none; border-radius: 40px; cursor: pointer; font-size: 16px; margin-top: 10px; }
+        button.gray { background: #6c757d; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📋 Тест тапсырмалары</h1>
+    <div id="quizContainer"></div>
+    <div style="text-align: center;"><button id="submitBtn" onclick="submitQuiz()">✅ Тестті тапсыру</button></div>
+    <div id="resultContainer"></div>
+    <br>
+    <button class="gray" onclick="backToDashboard()">← Курс бетіне</button>
+</div>
+<script>
+    const quizzes = {
+        1: { passingScore: 70, questions: [
+            { text: "Тіл біліміндегі сөздің мағыналарын зерттейтін сала.", options: ["Фонетика", "Лексика", "Сөзжасам", "Грамматика"], correct: 1 },
+            { text: "Сөзжасам саласы нені зерттейді?", options: ["Дыбыс пен әріп", "Жаңа сөздердің жасалуын", "Сөз мағыналарын", "Сөйлем"], correct: 1 },
+            { text: "Сөзжасам формуласы", options: ["Түбір сөз + жұрнақ", "Түбір сөз + жалғау", "Түбір сөз + түбір сөз", "Түбір сөз + жалғау мен жұрнақ"], correct: 0 },
+            { text: "«Біл» түбірі арқылы жасалған жаңа сөзді тап.", options: ["Білге", "Білді", "Білек", "Білгіш"], correct: 3 },
+            { text: "«Тәрбиелі» сөзінің түбірін тап", options: ["Тәр", "Бие", "Тәрбие", "Түбірі жоқ"], correct: 2 }
+        ] },
+        2: { passingScore: 70, questions: [
+            { text: "Сөзжасамның неше тәсілі бар?", options: ["2", "3", "4", "5"], correct: 1 },
+            { text: "Синтетикалық тәсілдің екінші атауы", options: ["Жұрнақ тәсілі", "Мағына тәсілі", "Күрделендіру тәсілі", "Бірігу тәсілі"], correct: 0 },
+            { text: "«Ақсақал» сөзі қандай тәсілге жатады?", options: ["Жұрнақ тәсілі", "Күрделендіру тәсілі", "Мағына тәсілі", "Бірігу тәсілі"], correct: 1 },
+            { text: "Мағына тәсілінің ерекшелігі", options: ["Жұрнақ жалғану арқылы", "Тіркесу арқылы", "Түбір сөзі өзгеріссіз қалады", "Морфемдік тұлғасы өзгермейді"], correct: 3 },
+            { text: "«Сыйлы» сөзі қай тәсіл арқылы жасалған", options: ["Жұрнақ тәсілі", "Күрделендіру тәсілі", "Мағына тәсілі", "Бірігу тәсілі"], correct: 0 }
+        ] },
+        3: { passingScore: 70, questions: [
+            { text: "Жұрнақ арқылы жасалған туынды сөзді тап.", options: ["Кәдесый", "Қазақылық", "кебеке-сандық", "сурет"], correct: 1 },
+            { text: "Туынды сөзді жасаудағы өнімді тәсілді ата.", options: ["Күрделендіру", "Мағына тәсілі", "Сөзжасамдық жұрнақ тәсілі", "Фонетикалық"], correct: 2 },
+            { text: "«Құндылық» сөзінің түбірі:", options: ["құнды", "құндылық", "-лық", "құн"], correct: 3 },
+            { text: "«Намысшыл» сөзі қай тәсілмен жасалған?", options: ["Фонетикалық", "Мағына тәсілі", "Сөзжасамдық жұрнақ тәсілі", "Күрделендіру"], correct: 2 },
+            { text: "Сөзжасамдық жұпты тап.", options: ["ақыл-ақылгөй", "ақыл-ақылсыздық", "ақылгөй-ақылсыз", "ақыл-ақылгөйлік"], correct: 0 }
+        ] },
+        4: { passingScore: 70, questions: [
+            { text: "Мағына тәсілінің ерекшелігін табыңыз.", options: ["Жұрнақ жалғанады", "Сөз тіркеседі", "Дыбыстық құрамы сақталып, мағынасы өзгереді", "Қосарлану арқылы жасалады"], correct: 2 },
+            { text: "Күрделену тәсілінің түрін табыңыз.", options: ["Жұрнақ жалғау", "Септік жалғау", "Бірігу", "Тәуелдеу"], correct: 2 },
+            { text: "Күрделену тәсілі арқылы жасалған сөзді табыңыз.", options: ["Білімді", "Кәсіпкер", "Теміржол", "Көркем"], correct: 2 },
+            { text: "Қосарлану арқылы жасалған күрделену тәсілін табыңыз.", options: ["Көкшетау", "Дәрі-дәрмек", "Кәсіпкер", "Білімпаз"], correct: 1 },
+            { text: "«Ашудас» сөзі қалай жасалған?", options: ["Синтетикалық тәсіл", "Лексико-семантикалық тәсіл", "Аналитикалық тәсіл", "Жалғау арқылы"], correct: 2 }
+        ] },
+        5: { passingScore: 70, questions: [
+            { text: "5Т моделінің бірінші кезеңі:", options: ["Талдау", "Түрлендіру", "Тану", "Қолдану"], correct: 2 },
+            { text: "Құрылымдық талдауда не анықталады?", options: ["Мағынасы", "Түбір мен жұрнақ", "Сөйлем", "Дыбыс"], correct: 1 },
+            { text: "Түрлендіру кезеңінде не жүзеге асады?", options: ["Бір сөз", "Дыбыс талданады", "Сөйлем құралады", "Бір түбірден бірнеше туынды сөз"], correct: 3 },
+            { text: "«Кәдесый» сөзі қалай жасалған?", options: ["Бірігу", "Жұрнақ", "Қосарлау", "Қысқарту"], correct: 0 },
+            { text: "Қай қатарда сөзжасамдық тізбек берілген?", options: ["Үй–үйлер", "Жаз–жазу–жазушы", "Дос–аға", "Киім–кешек"], correct: 1 }
+        ] },
+        6: { passingScore: 70, questions: [
+            { text: "Түбір сөзді табыңыз.", options: ["ата-ана", "ұлттық киім", "той", "қасиетті"], correct: 2 },
+            { text: "Туынды сөзді табыңыз.", options: ["домбырашы", "киіз", "дәстүр", "үй"], correct: 0 },
+            { text: "Біріккен сөз қатарын табыңыз.", options: ["ата-ана, бала-шаға", "ақсақал, атамекен", "ұлттық тәрбие, киіз үй", "шеберлік, өнерлі"], correct: 1 },
+            { text: "Туынды сөз жасайтын жұрнақты көрсетіңіз.", options: ["-шы", "-мен", "-да", "-ға"], correct: 0 },
+            { text: "Берілген туынды сөз қандай жолмен жасалған? «Қазақ халқы»", options: ["бірігу арқылы", "қосарлану арқылы", "тіркесу арқылы", "жұрнақ жалғану арқылы"], correct: 2 }
+        ] }
+    };
+
+    let lessonId = parseInt(localStorage.getItem('quizLessonId'));
+    let quiz = quizzes[lessonId];
+    let userAnswers = new Array(quiz.questions.length).fill(-1);
+
+    function loadQuiz() {
+        let html = '';
+        quiz.questions.forEach((q, idx) => {
+            html += `<div class="question-box"><p><strong>${idx+1}. ${q.text}</strong></p><div id="q${idx}">`;
+            q.options.forEach((opt, optIdx) => { html += `<div class="option" onclick="selectAnswer(${idx}, ${optIdx})">${String.fromCharCode(65+optIdx)}. ${opt}</div>`; });
+            html += `</div></div>`;
+        });
+        document.getElementById('quizContainer').innerHTML = html;
+    }
+
+    function selectAnswer(qIdx, optIdx) {
+        userAnswers[qIdx] = optIdx;
+        let opts = document.getElementById(`q${qIdx}`).getElementsByClassName('option');
+        for(let i=0; i<opts.length; i++) { if(i===optIdx) opts[i].classList.add('selected'); else opts[i].classList.remove('selected'); }
+    }
+
+    function submitQuiz() {
+        for(let i=0; i<userAnswers.length; i++) if(userAnswers[i]===-1) { alert(`${i+1}-сұраққа жауап берілмеген!`); return; }
+        let correct=0; for(let i=0; i<quiz.questions.length; i++) if(userAnswers[i]===quiz.questions[i].correct) correct++;
+        let percent = (correct/quiz.questions.length)*100, passed = percent >= quiz.passingScore;
+        let resultHtml = `<div class="result-box ${passed?'pass':'fail'}"><h2>${passed?'🎉 ҚҰТТЫҚТАЙМЫН!':'😔 ӨКІНІШКЕ ҚАРАЙ'}</h2><p>${correct}/${quiz.questions.length} дұрыс (${Math.round(percent)}%)</p>${passed?'<p>✅ Келесі сабақ ашылды!</p>':'<p>❌ 70% жинау керек</p>'}${passed?'<button onclick="nextLesson()">➡️ Келесі сабаққа өту</button>':'<button onclick="retryQuiz()">🔄 Қайта тапсыру</button>'}</div>`;
+        document.getElementById('resultContainer').innerHTML = resultHtml;
+        document.getElementById('submitBtn').disabled = true;
+        if(passed) localStorage.setItem('lesson'+lessonId+'_test_passed','true');
+
+        // ============ GOOGLE SHEETS-КЕ НӘТИЖЕ ЖІБЕРУ ============
+        try {
+            let user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            let webhookUrl = "https://script.google.com/macros/s/AKfycbznAReo9z5MOU25jFTILnaKmpv5Dfwrmgylq_N4-AJnfaZnAE6YsH4HxXUxUuSQXcmv/exec";
+            
+            fetch(webhookUrl, {
+                method: "POST",
+                mode: "no-cors",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    fullname: user.fullname || "Құрметті оқушы",
+                    email: user.email || "белгісіз",
+                    lessonId: lessonId,
+                    score: Math.round(percent)
+                })
+            });
+        } catch(e) { console.log("Қате:", e); }
+        // =========================================================
+    }
+
+    function nextLesson() { window.location.href = 'dashboard.html'; }
+    function retryQuiz() { userAnswers.fill(-1); loadQuiz(); document.getElementById('resultContainer').innerHTML = ''; document.getElementById('submitBtn').disabled = false; }
+    function backToDashboard() { window.location.href = 'dashboard.html'; }
+    loadQuiz();
+</script>
+</body>
+</html>
