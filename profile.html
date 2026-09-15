@@ -1,48 +1,23 @@
 <!DOCTYPE html>
-<html lang="kk">
+<html lang="ru">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Менің профилім - Қазақ тілі курсы</title>
-<style>
-*{box-sizing:border-box} body{margin:0;font-family:'Segoe UI','Roboto','Noto Sans',sans-serif;background:linear-gradient(rgba(255,248,225,.95),rgba(245,222,179,.9));min-height:100vh;padding:20px;color:#3E2A1C}.card{max-width:650px;margin:40px auto;background:#fffdf7;border:1px solid #E6D3B3;border-radius:40px;padding:35px;box-shadow:0 12px 30px rgba(0,0,0,.1)}.avatar{width:105px;height:105px;border-radius:50%;margin:0 auto 15px;background:#8B5A2B;color:#fff;display:flex;align-items:center;justify-content:center;font-size:42px;font-weight:700}.center{text-align:center}h1{color:#5A3A1A;margin:10px 0}.info{margin-top:30px}.row{background:#f7efe3;border-radius:16px;padding:15px 18px;margin:10px 0}.bar{height:14px;background:#e6e6e6;border-radius:20px;overflow:hidden}.fill{height:100%;background:#4CAF50;width:0%;transition:.3s}.buttons{display:flex;gap:10px;margin-top:25px}.btn{flex:1;border:0;border-radius:30px;padding:13px;text-align:center;text-decoration:none;font-weight:700;cursor:pointer}.primary{background:#8B5A2B;color:white}.secondary{background:#ead7ba;color:#4F2F10}@media(max-width:520px){.card{padding:25px 18px}.buttons{flex-direction:column}}
-</style>
+    <meta charset="UTF-8">
+    <title>Мой профиль</title>
 </head>
+
 <body>
-<div class="card">
-  <div class="center">
-    <div class="avatar" id="avatar">R</div>
-    <h1>Менің профилім</h1>
-    <p id="welcome">Қош келдіңіз!</p>
-  </div>
-  <div class="info">
-    <div class="row"><strong>Пайдаланушы:</strong> <span id="fullname">ratmir</span></div>
-    <div class="row"><strong>Email:</strong> <span id="email">ratmir2004@gmail.com</span></div>
-    <div class="row"><strong>Курс:</strong> Қазақ тілі — 5-сынып</div>
-  </div>
-  <h3>Оқу прогресі</h3>
-  <div class="bar"><div class="fill" id="progressFill"></div></div>
-  <p class="center" id="progressText">0/6 сабақ өтілді (0%)</p>
-  <div class="buttons">
-    <a class="btn primary" href="dashboard.html">📚 Оқуды жалғастыру</a>
-    <a class="btn secondary" href="index.html">🏠 Басты бет</a>
-  </div>
-</div>
-<script>
-if(localStorage.getItem('isLoggedIn') !== 'true') window.location.href='login.html';
-const user = JSON.parse(localStorage.getItem('currentUser') || 'null');
-if(user){
-  const name = user.fullname || 'ratmir';
-  document.getElementById('fullname').textContent=name;
-  document.getElementById('email').textContent=user.email || 'ratmir2004@gmail.com';
-  document.getElementById('avatar').textContent=name.charAt(0).toUpperCase();
-  document.getElementById('welcome').textContent='Қош келдіңіз, '+name+'!';
-}
-let completed=0;
-for(let i=1;i<=6;i++) if(localStorage.getItem('lesson'+i+'_test_passed')==='true') completed++;
-const percent=Math.round(completed/6*100);
-document.getElementById('progressFill').style.width=percent+'%';
-document.getElementById('progressText').textContent=`${completed}/6 сабақ өтілді (${percent}%)`;
-</script>
+
+    <h1>Мой профиль</h1>
+
+    <h2>ratmir</h2>
+
+    <p>Email: ratmir2004@gmail.com</p>
+
+    <p>Курс: Қазақ тілі</p>
+
+    <a href="dashboard.html">Перейти к курсу</a>
+
 </body>
+
 </html>
