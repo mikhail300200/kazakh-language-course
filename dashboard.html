@@ -161,6 +161,7 @@
     <button class="red-btn" onclick="logout()">Шығу</button>
 </div>
 <script>
+
     // ==========================================
     // ПРОВЕРКА ВХОДА
     // ==========================================
@@ -290,11 +291,15 @@
     // ==========================================
 
     function loadDashboard() {
+
         let unlocked = getUnlockedLessons();
+
         let completed = [];
-        
+
+
         // Проверяем пройденные уроки
         for (let i = 1; i <= 6; i++) {
+
             if (
                 localStorage.getItem(
                     getProgressKey(i)
@@ -304,18 +309,27 @@
                 completed.push(i);
             }
         }
+
+
         let html = '';
+
+
         // Создаём карточки уроков
         lessons.forEach(lesson => {
+
             let isUnlocked =
                 unlocked.includes(lesson.id);
+
             let isCompleted =
                 completed.includes(lesson.id);
+
+
             html += `
                 <div
                     class="lesson-card ${isUnlocked ? 'available' : 'locked'}"
                     onclick="${isUnlocked ? `openLesson(${lesson.id})` : ''}"
                 >
+
                     <div style="
                         display: flex;
                         justify-content: space-between;
@@ -371,25 +385,48 @@
                 </div>
             `;
         });
+
+
         // Показываем уроки
         document.getElementById(
             'lessonsList'
         ).innerHTML = html;
+
+
+        // ======================================
+        // ОБЩИЙ ПРОГРЕСС
+        // ======================================
+
         let percent =
             (completed.length / 6) * 100;
+
+
         document.getElementById(
             'progressFill'
         ).style.width =
             percent + '%';
+
+
         document.getElementById(
             'progressText'
         ).innerHTML =
             `✅ ${completed.length}/6 сабақ өтілді (${Math.round(percent)}%)`;
+
+
+        // ======================================
+        // СЕРТИФИКАТ
+        // ======================================
+
         if (completed.length === 6) {
+
             const btn =
                 document.createElement('div');
+
+
             btn.style.marginTop =
                 '20px';
+
+
             btn.innerHTML = `
                 <button
                     class="gold-btn"
@@ -398,31 +435,58 @@
                     🎓 СЕРТИФИКАТ АЛУ 🎓
                 </button>
             `;
+
+
             document.getElementById(
                 'lessonsList'
             ).after(btn);
         }
     }
+
+
+    // ==========================================
+    // ОТКРЫТИЕ УРОКА
+    // ==========================================
+
     function openLesson(id) {
+
         localStorage.setItem(
             'currentLesson',
             id
         );
+
         window.location.href =
             'lesson.html';
     }
+
+
+    // ==========================================
+    // ВЫХОД
+    // ==========================================
+
     function logout() {
+
         localStorage.removeItem(
             'isLoggedIn'
         );
+
         localStorage.removeItem(
             'currentUser'
         );
+
         alert("Шықтыңыз!");
+
         window.location.href =
             'index.html';
     }
+
+
+    // ==========================================
+    // ЗАПУСК
+    // ==========================================
+
     loadDashboard();
+
 </script>
 </body>
 </html>
