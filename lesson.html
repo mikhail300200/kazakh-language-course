@@ -59,6 +59,31 @@
     <button id="nextBtn" class="blue" onclick="goToQuiz()" style="display:none;">📋 Тестке өту →</button>
 </div>
 <script>
+    // Текущий пользователь
+let lessonUser = JSON.parse(
+    localStorage.getItem('currentUser')
+);
+
+// Email текущего пользователя
+function getLessonUserEmail() {
+
+    if (lessonUser && lessonUser.email) {
+        return lessonUser.email;
+    }
+
+    return 'guest';
+}
+
+
+// Создаём персональный ключ
+function getLessonKey(type) {
+
+    return getLessonUserEmail()
+        + '_lesson'
+        + lessonId
+        + '_'
+        + type;
+}
     const lessonsData = {
     1: {
         videoUrl: "https://www.youtube.com/embed/u-f1asK70C8",
@@ -107,13 +132,40 @@
     }
 
     function submitTask() {
-        let answer = document.getElementById('answer').value;
-        if(answer.length < 3) { alert('Жауабыңызды жазыңыз!'); return; }
-        localStorage.setItem('lesson'+lessonId+'_answer', answer);
-        localStorage.setItem('lesson'+lessonId+'_task_done', 'true');
-        alert('Тапсырма қабылданды!');
-        document.getElementById('nextBtn').style.display = 'inline-block';
+
+    let answer =
+        document.getElementById('answer').value;
+
+
+    if (answer.length < 3) {
+
+        alert('Жауабыңызды жазыңыз!');
+
+        return;
     }
+
+
+    // Сохраняем ответ отдельно для этого аккаунта
+    localStorage.setItem(
+        getLessonKey('answer'),
+        answer
+    );
+
+
+    // Отмечаем выполнение отдельно для этого аккаунта
+    localStorage.setItem(
+        getLessonKey('task_done'),
+        'true'
+    );
+
+
+    alert('Тапсырма қабылданды!');
+
+
+    document.getElementById(
+        'nextBtn'
+    ).style.display = 'inline-block';
+}
 
     function goToQuiz() { localStorage.setItem('quizLessonId', lessonId); window.location.href = 'quiz.html'; }
     function backToDashboard() { window.location.href = 'dashboard.html'; }
