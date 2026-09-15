@@ -148,7 +148,7 @@
 <body>
 <div class="container">
    <a href="profile.html" class="profile-btn">
-    <span class="profile-avatar">R</span>
+    <span class="profile-avatar" id="profileAvatar">R</span>
     <span>Менің профилім</span>
     <span class="profile-arrow">›</span>
 </a>
@@ -161,6 +161,18 @@
     <button class="red-btn" onclick="logout()">Шығу</button>
 </div>
 <script>
+    // Профильдегі аватар әрпін автоматты түрде шығару
+let currentUser = localStorage.getItem('currentUser');
+
+if (currentUser) {
+    let user = JSON.parse(currentUser);
+
+    if (user.fullname) {
+        let firstLetter = user.fullname.charAt(0).toUpperCase();
+
+        document.getElementById('profileAvatar').textContent = firstLetter;
+    }
+}
     const lessons = [
         { id: 1, title: "1-сабақ", duration: "15 минут" },
         { id: 2, title: "2-сабақ", duration: "15 минут" },
