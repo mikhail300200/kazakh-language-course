@@ -1,28 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="kk">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Курс беті - Қазақ тілі</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            background: linear-gradient(rgba(255, 248, 225, 0.95), rgba(245, 222, 179, 0.9)), url('https://www.transparenttextures.com/patterns/kazakh-ornament.png');
-            background-size: auto, 200px;
+            background: linear-gradient(
+                rgba(255, 248, 225, 0.95),
+                rgba(245, 222, 179, 0.9)
+            );
             font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
             min-height: 100vh;
             padding: 20px;
         }
+
         .container {
             max-width: 700px;
             margin: 0 auto;
             background: rgba(255, 255, 245, 0.95);
-            border-radius: 50px;
+            border-radius: 40px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 1px solid #E6D3B3;
         }
+
+        h1 {
+            color: #5A3A1A;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        /* ПРОФИЛЬ */
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: fit-content;
+            margin: 0 0 20px auto;
+            padding: 7px 14px 7px 7px;
+            background: linear-gradient(135deg, #ffffff, #fff8ec);
+            color: #5A3A1A;
+            border: 1px solid #DDBF8C;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(90,58,26,0.15);
+            transition: 0.25s;
+        }
+
+        .profile-btn:hover {
+            background: #fff3df;
+            transform: translateY(-2px);
+        }
+
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #8B5A2B, #5A3A1A);
+            color: white;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .profile-arrow {
+            font-size: 22px;
+            color: #8B5A2B;
+        }
+
+        /* САБАҚТАР */
         .lesson-card {
             border: 1px solid #DDBF8C;
             border-radius: 20px;
@@ -31,518 +89,131 @@
             background: #FFFCF8;
             transition: 0.3s;
         }
-        .lesson-card.available { cursor: pointer; border-left: 5px solid #4CAF50; }
-        .lesson-card.locked { opacity: 0.6; background: #f5f5f5; }
-        .badge { background: #4CAF50; color: white; padding: 3px 10px; border-radius: 20px; font-size: 12px; display: inline-block; margin-top: 8px; }
-        .progress-bar { width: 100%; background: #e0e0e0; border-radius: 10px; height: 10px; margin-top: 10px; }
-        .progress-fill { background: #4CAF50; height: 10px; border-radius: 10px; width: 0%; }
-        h1 { color: #5A3A1A; text-align: center; margin-bottom: 25px; }
-        .red-btn { background: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 40px; cursor: pointer; font-size: 16px; display: block; margin: 20px auto 0; width: 200px; }
-        .gold-btn { background: gold; color: black; font-weight: bold; padding: 12px 25px; border: none; border-radius: 40px; cursor: pointer; margin-top: 20px; width: 100%; }
-        @media (max-width: 600px) { .container { padding: 20px; } }
-        /* =========================
-   КНОПКА ПРОФИЛЯ
-========================= */
 
-.profile-btn {
-    display: flex !important;
-    align-items: center;
-    gap: 10px;
-
-    width: fit-content;
-    margin: 0 0 20px auto;
-
-    padding: 7px 14px 7px 7px;
-
-    background: linear-gradient(135deg, #ffffff, #fff8ec);
-    color: #5A3A1A !important;
-
-    border: 1px solid #DDBF8C;
-    border-radius: 50px;
-
-    text-decoration: none !important;
-
-    font-size: 15px;
-    font-weight: 600;
-
-    box-shadow: 0 4px 12px rgba(90, 58, 26, 0.15);
-
-    cursor: pointer;
-    transition: all 0.25s ease;
-}
-
-
-/* Круг с буквой R */
-
-.profile-avatar {
-    width: 38px;
-    height: 38px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    flex-shrink: 0;
-
-    background: linear-gradient(135deg, #8B5A2B, #5A3A1A);
-    color: white;
-
-    border-radius: 50%;
-
-    font-size: 18px;
-    font-weight: bold;
-
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-}
-
-
-/* Стрелочка */
-
-.profile-arrow {
-    font-size: 22px;
-    line-height: 1;
-
-    color: #8B5A2B;
-
-    transition: transform 0.25s;
-}
-
-
-/* Наведение */
-
-.profile-btn:hover {
-    background: #fff3df;
-
-    border-color: #C99C61;
-
-    transform: translateY(-2px);
-
-    box-shadow: 0 7px 18px rgba(90,58,26,0.20);
-}
-
-
-/* Стрелочка двигается */
-
-.profile-btn:hover .profile-arrow {
-    transform: translateX(3px);
-}
-
-
-/* Телефон */
-
-@media (max-width: 600px) {
-
-    .profile-btn {
-        font-size: 14px;
-        padding: 6px 12px 6px 6px;
-    }
-
-    .profile-avatar {
-        width: 34px;
-        height: 34px;
-        font-size: 16px;
-    }
-}
-        .dev-download {
-    display: block;
-    padding: 14px;
-    border-radius: 15px;
-    background: #8B5A2B;
-    color: white;
-    text-decoration: none;
-    text-align: center;
-    font-size: 15px;
-    font-weight: 600;
-    cursor: pointer;
-}
-    </style>
-</head>
-<body>
-<div class="container">
-   <a href="profile.html" class="profile-btn">
-    <span class="profile-avatar" id="profileAvatar">R</span>
-    <span>Менің профилім</span>
-    <span class="profile-arrow">›</span>
-</a>
-    <h1>📚 Қазақ тілі курсы</h1>
-    <div id="lessonsList"></div>
-    <div id="developerPanel" style="display:none;">
-    <h2>👨‍💻 Әзірлеуші панелі</h2>
-
-    <div class="dev-grid">
-        <button onclick="openLesson(1)">📖 1-сабақ</button>
-        <button onclick="openLesson(2)">📖 2-сабақ</button>
-        <button onclick="openLesson(3)">📖 3-сабақ</button>
-        <button onclick="openLesson(4)">📖 4-сабақ</button>
-        <button onclick="openLesson(5)">📖 5-сабақ</button>
-        <button onclick="openLesson(6)">📖 6-сабақ</button>
-
-        <button onclick="window.location.href='certificate.html'">
-            🎓 Сертификат
-        </button>
-
-        <button onclick="window.location.href='Туынды_сөздер.pdf'">
-            📕 Туынды сөздер
-        </button>
-
-        <a href="Сатылай_кешенді_талдау.pdf" download class="dev-download">
-    📘 Сатылай кешенді талдау
-</a>
-</div>
-    <div style="margin-top: 30px;">
-        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-        <p id="progressText" style="text-align: center; margin-top: 10px; color: #4F2F10;"></p>
-    </div>
-    <button class="red-btn" onclick="logout()">Шығу</button>
-</div>
-<script>
-
-    // ==========================================
-    // ПРОВЕРКА ВХОДА
-    // ==========================================
-
-    if (localStorage.getItem('isLoggedIn') !== 'true') {
-        window.location.href = 'index.html';
-    }
-
-
-    // ==========================================
-    // ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ
-    // ==========================================
-
-    let currentUser = JSON.parse(
-        localStorage.getItem('currentUser')
-    );
-
-
-    // ==========================================
-    // АВТОМАТИЧЕСКАЯ БУКВА АВАТАРА
-    // ==========================================
-
-    if (currentUser && currentUser.fullname) {
-
-        let firstLetter =
-            currentUser.fullname
-                .charAt(0)
-                .toUpperCase();
-
-        document.getElementById('profileAvatar').textContent =
-            firstLetter;
-    }
-
-
-    // ==========================================
-    // СПИСОК УРОКОВ
-    // ==========================================
-
-    const lessons = [
-        { id: 1, title: "1-сабақ", duration: "15 минут" },
-        { id: 2, title: "2-сабақ", duration: "15 минут" },
-        { id: 3, title: "3-сабақ", duration: "15 минут" },
-        { id: 4, title: "4-сабақ", duration: "15 минут" },
-        { id: 5, title: "5-сабақ", duration: "15 минут" },
-        { id: 6, title: "6-сабақ", duration: "15 минут" }
-    ];
-
-
-    // ==========================================
-    // ПОЛУЧАЕМ EMAIL ПОЛЬЗОВАТЕЛЯ
-    // ==========================================
-
-    function getUserEmail() {
-
-        if (currentUser && currentUser.email) {
-            return currentUser.email;
+        .lesson-card.available {
+            cursor: pointer;
+            border-left: 5px solid #4CAF50;
         }
 
-        return 'guest';
-    }
-
-
-    // ==========================================
-    // ПРОВЕРЯЕМ РОЛЬ DEVELOPER
-    // ==========================================
-
-    function isDeveloper() {
-
-        if (!currentUser) {
-            return false;
+        .lesson-card.available:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
-        return currentUser.role === 'developer';
-    }
-
-
-    // ==========================================
-    // КЛЮЧ ПРОГРЕССА
-    // У КАЖДОГО АККАУНТА СВОЙ
-    // ==========================================
-
-    function getProgressKey(lessonId) {
-
-        return getUserEmail()
-            + '_lesson'
-            + lessonId
-            + '_test_passed';
-    }
-
-
-    // ==========================================
-    // КАКИЕ УРОКИ ДОСТУПНЫ
-    // ==========================================
-
-    function getUnlockedLessons() {
-
-        // Разработчику доступны ВСЕ уроки
-        if (isDeveloper()) {
-            return [1, 2, 3, 4, 5, 6];
+        .lesson-card.locked {
+            opacity: 0.6;
+            background: #f5f5f5;
         }
 
-
-        // Ученику сначала доступен только первый
-        let unlocked = [1];
-
-
-        // Следующий открывается после предыдущего
-        for (let i = 2; i <= 6; i++) {
-
-            if (
-                localStorage.getItem(
-                    getProgressKey(i - 1)
-                ) === 'true'
-            ) {
-
-                unlocked.push(i);
-            }
+        .badge {
+            background: #4CAF50;
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            display: inline-block;
+            margin-top: 8px;
         }
 
-
-        return unlocked;
-    }
-
-
-    // ==========================================
-    // ЗАГРУЖАЕМ DASHBOARD
-    // ==========================================
-
-    function loadDashboard() {
-
-        let unlocked = getUnlockedLessons();
-
-        let completed = [];
-
-
-        // Проверяем пройденные уроки
-        for (let i = 1; i <= 6; i++) {
-
-            if (
-                localStorage.getItem(
-                    getProgressKey(i)
-                ) === 'true'
-            ) {
-
-                completed.push(i);
-            }
+        /* ПРОГРЕСС */
+        .progress-area {
+            margin-top: 30px;
         }
 
-
-        let html = '';
-
-
-        // Создаём карточки уроков
-        lessons.forEach(lesson => {
-
-            let isUnlocked =
-                unlocked.includes(lesson.id);
-
-            let isCompleted =
-                completed.includes(lesson.id);
-
-
-            html += `
-                <div
-                    class="lesson-card ${isUnlocked ? 'available' : 'locked'}"
-                    onclick="${isUnlocked ? `openLesson(${lesson.id})` : ''}"
-                >
-
-                    <div style="
-                        display: flex;
-                        justify-content: space-between;
-                    ">
-
-                        <div>
-
-                            <h3>
-                                📖 ${lesson.title}
-                            </h3>
-
-                            <p>
-                                ⏱️ ${lesson.duration}
-                            </p>
-
-                            ${
-                                isCompleted
-                                ? '<span class="badge">✅ Өтілген</span>'
-                                : ''
-                            }
-
-                        </div>
-
-
-                        <div>
-
-                            ${
-                                !isUnlocked
-                                ? '🔒'
-                                : ''
-                            }
-
-                        </div>
-
-                    </div>
-
-
-                    ${
-                        isCompleted
-                        ? `
-                            <div class="progress-bar">
-
-                                <div
-                                    class="progress-fill"
-                                    style="width:100%">
-                                </div>
-
-                            </div>
-                        `
-                        : ''
-                    }
-
-                </div>
-            `;
-        });
-
-
-        // Показываем уроки
-        document.getElementById(
-            'lessonsList'
-        ).innerHTML = html;
-
-
-        // ======================================
-        // ОБЩИЙ ПРОГРЕСС
-        // ======================================
-
-        let percent =
-            (completed.length / 6) * 100;
-
-
-        document.getElementById(
-            'progressFill'
-        ).style.width =
-            percent + '%';
-
-
-        document.getElementById(
-            'progressText'
-        ).innerHTML =
-            `✅ ${completed.length}/6 сабақ өтілді (${Math.round(percent)}%)`;
-
-
-        // ======================================
-        // СЕРТИФИКАТ
-        // ======================================
-
-    if (completed.length === 6 || isDeveloper()) {
-
-            const btn =
-                document.createElement('div');
-
-
-            btn.style.marginTop =
-                '20px';
-
-
-            btn.innerHTML = `
-                <button
-                    class="gold-btn"
-                    onclick="window.location.href='certificate.html'"
-                >
-                    🎓 СЕРТИФИКАТ АЛУ 🎓
-                </button>
-            `;
-
-
-            document.getElementById(
-    'lessonsList'
-).appendChild(btn);
+        .progress-bar {
+            width: 100%;
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
         }
-    }
 
+        .progress-fill {
+            background: #4CAF50;
+            height: 10px;
+            border-radius: 10px;
+            width: 0%;
+            transition: 0.4s;
+        }
 
-    // ==========================================
-    // ОТКРЫТИЕ УРОКА
-    // ==========================================
+        #progressText {
+            text-align: center;
+            margin-top: 10px;
+            color: #4F2F10;
+            font-weight: 600;
+        }
 
-    function openLesson(id) {
+        /* СЕРТИФИКАТ */
+        .gold-btn {
+            background: gold;
+            color: black;
+            font-weight: bold;
+            padding: 13px 25px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+            font-size: 16px;
+        }
 
-        localStorage.setItem(
-            'currentLesson',
-            id
-        );
+        /* DEVELOPER ПАНЕЛЬ */
+        #developerPanel {
+            margin-top: 30px;
+            padding: 25px;
+            background: linear-gradient(135deg, #fffaf0, #f7ead5);
+            border: 2px solid #DDBF8C;
+            border-radius: 30px;
+            box-shadow: 0 8px 20px rgba(90,58,26,0.15);
+        }
 
-        window.location.href =
-            'lesson.html';
-    }
-     function openLesson(id) {
-    localStorage.setItem('currentLesson', id);
-    window.location.href = 'lesson.html';
-}
+        #developerPanel h2 {
+            text-align: center;
+            color: #5A3A1A;
+            margin-bottom: 20px;
+        }
 
+        .dev-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+        }
 
-// ОСЫ ЖЕРГЕ ҚОЯСЫҢ 👇
-function loadDeveloperPanel() {
-    if (isDeveloper()) {
-        document.getElementById('developerPanel').style.display = 'block';
-    }
-}
+        .dev-grid button,
+        .dev-grid a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 55px;
+            padding: 12px;
+            border: none;
+            border-radius: 15px;
+            background: #8B5A2B;
+            color: white;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            transition: 0.2s;
+        }
 
+        .dev-grid button:hover,
+        .dev-grid a:hover {
+            background: #6F451F;
+            transform: translateY(-2px);
+        }
 
-function logout() {
-    localStorage.removeItem('isLoggedIn');
-    localStorage.removeItem('currentUser');
-    alert("Шықтыңыз!");
-    window.location.href = 'index.html';
-}
-
-
-    // ==========================================
-    // ВЫХОД
-    // ==========================================
-
-    function logout() {
-
-        localStorage.removeItem(
-            'isLoggedIn'
-        );
-
-        localStorage.removeItem(
-            'currentUser'
-        );
-
-        alert("Шықтыңыз!");
-
-        window.location.href =
-            'index.html';
-    }
-
-
-    // ==========================================
-    // ЗАПУСК
-    // ==========================================
-
-    loadDashboard();
-    loadDeveloperPanel();
-
-</script>
-</body>
-</html>
+        /* ШЫҒУ */
+        .red-btn {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 25px auto 0;
+            width: 200px
