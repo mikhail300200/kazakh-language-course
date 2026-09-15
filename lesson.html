@@ -112,8 +112,10 @@ function getLessonKey(type) {
 };
 
     let lessonId = parseInt(localStorage.getItem('currentLesson'));
-    let taskDone = localStorage.getItem('lesson'+lessonId+'_task_done') === 'true';
 
+let taskDone = localStorage.getItem(
+    getLessonKey('task_done')
+) === 'true';
     function loadLesson() {
         document.getElementById('lessonTitle').innerHTML = lessonId + " - Сабақ";
         let data = lessonsData[lessonId];
