@@ -114,7 +114,16 @@
         let resultHtml = `<div class="result-box ${passed?'pass':'fail'}"><h2>${passed?'🎉 ҚҰТТЫҚТАЙМЫН!':'😔 ӨКІНІШКЕ ҚАРАЙ'}</h2><p>${correct}/${quiz.questions.length} дұрыс (${Math.round(percent)}%)</p>${passed?'<p>✅ Келесі сабақ ашылды!</p>':'<p>❌ 70% жинау керек</p>'}${passed?'<button onclick="nextLesson()">➡️ Келесі сабаққа өту</button>':'<button onclick="retryQuiz()">🔄 Қайта тапсыру</button>'}</div>`;
         document.getElementById('resultContainer').innerHTML = resultHtml;
         document.getElementById('submitBtn').disabled = true;
-        if(passed) localStorage.setItem('lesson'+lessonId+'_test_passed','true');
+        if (passed) {
+    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if (currentUser && currentUser.email) {
+        let progressKey =
+            currentUser.email + '_lesson' + lessonId + '_test_passed';
+
+        localStorage.setItem(progressKey, 'true');
+    }
+}
 
         // ============ GOOGLE SHEETS-КЕ НӘТИЖЕ ЖІБЕРУ ============
         try {
