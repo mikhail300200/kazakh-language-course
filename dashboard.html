@@ -161,18 +161,46 @@
     <button class="red-btn" onclick="logout()">Шығу</button>
 </div>
 <script>
-    // Профильдегі аватар әрпін автоматты түрде шығару
-let currentUser = localStorage.getItem('currentUser');
+   <script>
 
-if (currentUser) {
-    let user = JSON.parse(currentUser);
+    // ==========================================
+    // ПРОВЕРКА ВХОДА
+    // ==========================================
 
-    if (user.fullname) {
-        let firstLetter = user.fullname.charAt(0).toUpperCase();
-
-        document.getElementById('profileAvatar').textContent = firstLetter;
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'index.html';
     }
-}
+
+
+    // ==========================================
+    // ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ
+    // ==========================================
+
+    let currentUser = JSON.parse(
+        localStorage.getItem('currentUser')
+    );
+
+
+    // ==========================================
+    // АВТОМАТИЧЕСКАЯ БУКВА АВАТАРА
+    // ==========================================
+
+    if (currentUser && currentUser.fullname) {
+
+        let firstLetter =
+            currentUser.fullname
+                .charAt(0)
+                .toUpperCase();
+
+        document.getElementById('profileAvatar').textContent =
+            firstLetter;
+    }
+
+
+    // ==========================================
+    // СПИСОК УРОКОВ
+    // ==========================================
+
     const lessons = [
         { id: 1, title: "1-сабақ", duration: "15 минут" },
         { id: 2, title: "2-сабақ", duration: "15 минут" },
@@ -181,86 +209,223 @@ if (currentUser) {
         { id: 5, title: "5-сабақ", duration: "15 минут" },
         { id: 6, title: "6-сабақ", duration: "15 минут" }
     ];
-   // Получаем email текущего пользователя
 
-function getUserEmail()
-function isDeveloper() {
-    let currentUser = JSON.parse(
-        localStorage.getItem('currentUser')
-    );
 
-    if (!currentUser) {
-        return false;
-    }
+    // ==========================================
+    // ПОЛУЧАЕМ EMAIL ПОЛЬЗОВАТЕЛЯ
+    // ==========================================
 
-    return currentUser.role === 'developer';
-}{
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    function getUserEmail() {
 
-    if (currentUser && currentUser.email) {
-        return currentUser.email;
-    }
-    return 'guest';
-}
-// Создаём отдельный ключ прогресса для каждого пользователя
-function getProgressKey(lessonId) {
-    return getUserEmail() + '_lesson' + lessonId + '_test_passed';
-}
-// Проверяем, какие уроки открыты
-function getUnlockedLessons() {
-    // Разработчику доступны все уроки
-    if (isDeveloper()) {
-        return [1, 2, 3, 4, 5, 6];
-    }
-    // Обычному пользователю сначала доступен только 1 урок
-    let unlocked = [1];
-    for (let i = 2; i <= 6; i++) {
-        if (
-            localStorage.getItem(
-                getProgressKey(i - 1)
-            ) === 'true'
-        ) {
-            unlocked.push(i);
+        if (currentUser && currentUser.email) {
+            return currentUser.email;
         }
+
+        return 'guest';
     }
-    return unlocked;
-}
+
+
+    // ==========================================
+    // ПРОВЕРЯЕМ РОЛЬ DEVELOPER
+    // ==========================================
+
+    function isDeveloper() {
+
+        if (!currentUser) {
+            return false;
+        }
+
+        return currentUser.role === 'developer';
+    }
+
+
+    // ==========================================
+    // КЛЮЧ ПРОГРЕССА
+    // У КАЖДОГО АККАУНТА СВОЙ
+    // ==========================================
+
+    function getProgressKey(lessonId) {
+
+        return getUserEmail()
+            + '_lesson'
+            + lessonId
+            + '_test_passed';
+    }
+
+
+    // ==========================================
+    // КАКИЕ УРОКИ ДОСТУПНЫ
+    // ==========================================
+
+    function getUnlockedLessons() {
+
+        // Разработчику доступны ВСЕ уроки
+        if (isDeveloper()) {
+            return [1, 2, 3, 4, 5, 6];
+        }
+
+
+        // Ученику сначала доступен только первый
+        let unlocked = [1];
+
+
+        // Следующий открывается после предыдущего
+        for (let i = 2; i <= 6; i++) {
+
+            if (
+                localStorage.getItem(
+                    getProgressKey(i - 1)
+                ) === 'true'
+            ) {
+
+                unlocked.push(i);
+            }
+        }
+
+
+        return unlocked;
+    }
+
+
+    // ==========================================
+    // ЗАГРУЖАЕМ DASHBOARD
+    // ==========================================
+
     function loadDashboard() {
         let unlocked = getUnlockedLessons();
         let completed = [];
+        
+        // Проверяем пройденные уроки
         for (let i = 1; i <= 6; i++) {
-    if (
-        localStorage.getItem(
-            getProgressKey(i)
-        ) === 'true'
-    ) {
-        completed.push(i);
-    }
-}
+            if (
+                localStorage.getItem(
+                    getProgressKey(i)
+                ) === 'true'
+            ) {
+
+                completed.push(i);
+            }
+        }
         let html = '';
+        // Создаём карточки уроков
         lessons.forEach(lesson => {
-            let isUnlocked = unlocked.includes(lesson.id);
-            let isCompleted = completed.includes(lesson.id);
-            html += `<div class="lesson-card ${isUnlocked ? 'available' : 'locked'}" onclick="${isUnlocked ? `openLesson(${lesson.id})` : ''}">
-                <div style="display: flex; justify-content: space-between;"><div><h3>📖 ${lesson.title}</h3><p>⏱️ ${lesson.duration}</p>${isCompleted ? '<span class="badge">✅ Өтілген</span>' : ''}</div><div>${!isUnlocked ? '🔒' : ''}</div></div>
-                ${isCompleted ? '<div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>' : ''}
-            </div>`;
+            let isUnlocked =
+                unlocked.includes(lesson.id);
+            let isCompleted =
+                completed.includes(lesson.id);
+            html += `
+                <div
+                    class="lesson-card ${isUnlocked ? 'available' : 'locked'}"
+                    onclick="${isUnlocked ? `openLesson(${lesson.id})` : ''}"
+                >
+                    <div style="
+                        display: flex;
+                        justify-content: space-between;
+                    ">
+
+                        <div>
+
+                            <h3>
+                                📖 ${lesson.title}
+                            </h3>
+
+                            <p>
+                                ⏱️ ${lesson.duration}
+                            </p>
+
+                            ${
+                                isCompleted
+                                ? '<span class="badge">✅ Өтілген</span>'
+                                : ''
+                            }
+
+                        </div>
+
+
+                        <div>
+
+                            ${
+                                !isUnlocked
+                                ? '🔒'
+                                : ''
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    ${
+                        isCompleted
+                        ? `
+                            <div class="progress-bar">
+
+                                <div
+                                    class="progress-fill"
+                                    style="width:100%">
+                                </div>
+
+                            </div>
+                        `
+                        : ''
+                    }
+
+                </div>
+            `;
         });
-        document.getElementById('lessonsList').innerHTML = html;
-        let percent = (completed.length/6)*100;
-        document.getElementById('progressFill').style.width = percent+'%';
-        document.getElementById('progressText').innerHTML = `✅ ${completed.length}/6 сабақ өтілді (${Math.round(percent)}%)`;
-        if(completed.length === 6) {
-            const btn = document.createElement('div');
-            btn.style.marginTop = '20px';
-            btn.innerHTML = '<button class="gold-btn" onclick="window.location.href=\'certificate.html\'">🎓 СЕРТИФИКАТ АЛУ 🎓</button>';
-            document.getElementById('lessonsList').after(btn);
+        // Показываем уроки
+        document.getElementById(
+            'lessonsList'
+        ).innerHTML = html;
+        let percent =
+            (completed.length / 6) * 100;
+        document.getElementById(
+            'progressFill'
+        ).style.width =
+            percent + '%';
+        document.getElementById(
+            'progressText'
+        ).innerHTML =
+            `✅ ${completed.length}/6 сабақ өтілді (${Math.round(percent)}%)`;
+        if (completed.length === 6) {
+            const btn =
+                document.createElement('div');
+            btn.style.marginTop =
+                '20px';
+            btn.innerHTML = `
+                <button
+                    class="gold-btn"
+                    onclick="window.location.href='certificate.html'"
+                >
+                    🎓 СЕРТИФИКАТ АЛУ 🎓
+                </button>
+            `;
+            document.getElementById(
+                'lessonsList'
+            ).after(btn);
         }
     }
-    function openLesson(id) { localStorage.setItem('currentLesson', id); window.location.href = 'lesson.html'; }
-    function logout() { localStorage.removeItem('isLoggedIn'); localStorage.removeItem('currentUser'); alert("Шықтыңыз!"); window.location.href = 'index.html'; }
-    if(localStorage.getItem('isLoggedIn') !== 'true') window.location.href = 'index.html';
+    function openLesson(id) {
+        localStorage.setItem(
+            'currentLesson',
+            id
+        );
+        window.location.href =
+            'lesson.html';
+    }
+    function logout() {
+        localStorage.removeItem(
+            'isLoggedIn'
+        );
+        localStorage.removeItem(
+            'currentUser'
+        );
+        alert("Шықтыңыз!");
+        window.location.href =
+            'index.html';
+    }
     loadDashboard();
+</script>
 </script>
 </body>
 </html>
