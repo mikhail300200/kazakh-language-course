@@ -1,22 +1,434 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="kk">
 
 <head>
     <meta charset="UTF-8">
-    <title>Мой профиль</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Менің профилім</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        .profile-container {
+            max-width: 600px;
+            margin: 40px auto;
+            background: rgba(255, 255, 255, 0.96);
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .profile-header {
+            text-align: center;
+        }
+
+        .avatar {
+            width: 100px;
+            height: 100px;
+
+            margin: 0 auto 15px;
+
+            border-radius: 50%;
+
+            background: #8B5A2B;
+            color: white;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            font-size: 40px;
+            font-weight: bold;
+        }
+
+        .profile-header h1 {
+            margin-bottom: 5px;
+        }
+
+        .username {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .profile-info {
+            margin-top: 25px;
+        }
+
+        .info-box {
+            background: #f7f3ed;
+
+            padding: 15px;
+
+            margin-bottom: 12px;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+        }
+
+        .progress-section {
+            margin-top: 30px;
+        }
+
+        .progress-section h3 {
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 18px;
+
+            background: #ddd;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+
+            background: #4CAF50;
+
+            transition: 0.5s;
+        }
+
+        #progressText {
+            text-align: center;
+
+            margin-top: 10px;
+
+            font-weight: bold;
+        }
+
+        .profile-buttons {
+            margin-top: 30px;
+        }
+
+        .course-btn {
+            display: block;
+
+            background: #4CAF50;
+            color: white;
+
+            text-decoration: none;
+            text-align: center;
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            margin-bottom: 10px;
+
+            font-weight: bold;
+        }
+
+        .course-btn:hover {
+            background: #3d9140;
+        }
+
+        .logout-btn {
+            width: 100%;
+
+            background: #e74c3c;
+
+            color: white;
+
+            border: none;
+
+            padding: 13px;
+
+            border-radius: 12px;
+
+            font-size: 16px;
+
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #c0392b;
+        }
+
+    </style>
+
 </head>
+
 
 <body>
 
-    <h1>Мой профиль</h1>
 
-    <h2>ratmir</h2>
+<div class="profile-container">
 
-    <p>Email: ratmir2004@gmail.com</p>
 
-    <p>Курс: Қазақ тілі</p>
+    <!-- АВАТАР -->
 
-    <a href="dashboard.html">Перейти к курсу</a>
+    <div class="profile-header">
+
+        <div class="avatar" id="avatar">
+            R
+        </div>
+
+        <h1>Менің профилім</h1>
+
+        <p class="username" id="username">
+            ratmir
+        </p>
+
+    </div>
+
+
+
+    <!-- АҚПАРАТ -->
+
+    <div class="profile-info">
+
+        <div class="info-box">
+
+            👤 <strong>Пайдаланушы:</strong>
+
+            <span id="fullname">
+                ratmir
+            </span>
+
+        </div>
+
+
+        <div class="info-box">
+
+            📧 <strong>Email:</strong>
+
+            <span id="email">
+                ratmir2004@gmail.com
+            </span>
+
+        </div>
+
+
+        <div class="info-box">
+
+            📚 <strong>Курс:</strong>
+
+            Қазақ тілі
+
+        </div>
+
+
+        <div class="info-box">
+
+            🎓 <strong>Сынып:</strong>
+
+            5-сынып
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ПРОГРЕСС -->
+
+    <div class="progress-section">
+
+        <h3>
+            📊 Оқу прогресі
+        </h3>
+
+
+        <div class="progress-bar">
+
+            <div
+                class="progress-fill"
+                id="progressFill">
+            </div>
+
+        </div>
+
+
+        <p id="progressText">
+            0 / 6 сабақ өтілді
+        </p>
+
+    </div>
+
+
+
+    <!-- КНОПКАЛАР -->
+
+    <div class="profile-buttons">
+
+
+        <a
+            href="dashboard.html"
+            class="course-btn">
+
+            📚 Оқуды жалғастыру
+
+        </a>
+
+
+        <button
+            class="logout-btn"
+            onclick="logout()">
+
+            🚪 Аккаунттан шығу
+
+        </button>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+    /*
+    Проверяем:
+    вошёл пользователь или нет
+    */
+
+    if (
+        localStorage.getItem("isLoggedIn") !== "true"
+    ) {
+
+        window.location.href = "login.html";
+
+    }
+
+
+
+    /*
+    Получаем данные пользователя
+    */
+
+    let currentUser =
+        localStorage.getItem("currentUser");
+
+
+    if (currentUser) {
+
+        let user =
+            JSON.parse(currentUser);
+
+
+        document.getElementById("fullname")
+            .textContent =
+            user.fullname || "ratmir";
+
+
+        document.getElementById("username")
+            .textContent =
+            user.fullname || "ratmir";
+
+
+        document.getElementById("email")
+            .textContent =
+            user.email || "ratmir2004@gmail.com";
+
+
+        /*
+        Первая буква имени
+        */
+
+        let firstLetter =
+            (user.fullname || "ratmir")
+            .charAt(0)
+            .toUpperCase();
+
+
+        document.getElementById("avatar")
+            .textContent =
+            firstLetter;
+
+    }
+
+
+
+    /*
+    Считаем пройденные уроки
+    */
+
+    let completedLessons = 0;
+
+
+    for (
+        let i = 1;
+        i <= 6;
+        i++
+    ) {
+
+        if (
+            localStorage.getItem(
+                "lesson" + i + "_test_passed"
+            ) === "true"
+        ) {
+
+            completedLessons++;
+
+        }
+
+    }
+
+
+
+    /*
+    Рассчитываем проценты
+    */
+
+    let percent =
+        Math.round(
+            completedLessons / 6 * 100
+        );
+
+
+
+    /*
+    Показываем прогресс
+    */
+
+    document.getElementById(
+        "progressFill"
+    ).style.width =
+        percent + "%";
+
+
+    document.getElementById(
+        "progressText"
+    ).textContent =
+        completedLessons +
+        " / 6 сабақ өтілді (" +
+        percent +
+        "%)";
+
+
+
+    /*
+    Выход из аккаунта
+    */
+
+    function logout() {
+
+        localStorage.removeItem(
+            "isLoggedIn"
+        );
+
+        localStorage.removeItem(
+            "currentUser"
+        );
+
+
+        window.location.href =
+            "index.html";
+
+    }
+
+</script>
+
 
 </body>
 
