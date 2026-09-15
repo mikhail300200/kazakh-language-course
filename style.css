@@ -1,4 +1,5 @@
 /* style.css - ТЕЛЕФОНҒА БЕЙІМДЕЛГЕН */
+
 * {
     margin: 0;
     padding: 0;
@@ -15,7 +16,11 @@ body {
     min-height: 100vh;
 }
 
-/* Барлық контейнерлерге мобильді бейімдеу */
+
+/* =========================
+   НЕГІЗГІ КОНТЕЙНЕР
+========================= */
+
 .container {
     max-width: 100%;
     width: 100%;
@@ -23,17 +28,27 @@ body {
     background: rgba(255, 255, 255, 0.95);
     border-radius: 16px;
     padding: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Телефонда суреттер кішірейсін */
+
+/* =========================
+   СУРЕТТЕР
+========================= */
+
 img {
     max-width: 100%;
     height: auto;
 }
 
-/* Кнопкалар үлкен (саусақпен басуға ыңғайлы) */
-button, .btn, a button {
+
+/* =========================
+   НЕГІЗГІ БАТЫРМАЛАР
+========================= */
+
+button,
+.btn,
+a button {
     background: #4CAF50;
     color: white;
     padding: 12px 20px;
@@ -56,30 +71,89 @@ button.blue {
     background: #007bff;
 }
 
-/* Сабақ карточкалары */
+
+/* =========================
+   ПРОФИЛЬ БАТЫРМАСЫ
+========================= */
+
+.profile-btn {
+    display: block;
+    width: fit-content;
+
+    margin-left: auto;
+    margin-bottom: 20px;
+
+    background: #8B5A2B;
+    color: white;
+
+    padding: 10px 20px;
+
+    border-radius: 30px;
+
+    text-decoration: none;
+
+    font-size: 16px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.profile-btn:hover {
+    background: #5A3A1A;
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   САБАҚ КАРТОЧКАЛАРЫ
+========================= */
+
 .lesson-card {
     border: 1px solid #ddd;
     border-radius: 14px;
+
     padding: 15px;
+
     margin: 12px 0;
+
     background: #f9f9f9;
 }
 
-/* Тест сұрақтары */
+
+/* =========================
+   ТЕСТ СҰРАҚТАРЫ
+========================= */
+
 .question-box {
     background: #f9f9f9;
+
     padding: 15px;
+
     margin: 15px 0;
+
     border-radius: 12px;
 }
 
+
+/* =========================
+   ТЕСТ ЖАУАПТАРЫ
+========================= */
+
 .option {
     margin: 10px 0;
+
     padding: 12px;
+
     background: white;
+
     border-radius: 10px;
+
     cursor: pointer;
+
     border: 1px solid #ddd;
+
     font-size: 15px;
 }
 
@@ -88,70 +162,131 @@ button.blue {
     color: white;
 }
 
-/* Форма элементтері */
-input, textarea, select {
+
+/* =========================
+   ФОРМА ЭЛЕМЕНТТЕРІ
+========================= */
+
+input,
+textarea,
+select {
     width: 100%;
+
     padding: 12px;
+
     margin: 8px 0;
+
     border: 1px solid #ccc;
+
     border-radius: 10px;
+
     font-size: 16px;
 }
 
-/* Тақырыптар */
+
+/* =========================
+   ТАҚЫРЫПТАР
+========================= */
+
 h1 {
     font-size: 24px;
+
     text-align: center;
+
     color: #2c3e50;
 }
 
 h2 {
     font-size: 20px;
+
     text-align: center;
+
     color: #2c3e50;
 }
 
-/* Видео контейнер */
+
+/* =========================
+   ВИДЕО
+========================= */
+
 .video-container {
     position: relative;
+
     width: 100%;
+
     background: black;
+
     border-radius: 12px;
+
     overflow: hidden;
 }
 
 video {
     width: 100%;
+
     height: auto;
+
     display: block;
 }
 
-/* Сертификат беті (мобильді) */
+
+/* =========================
+   СЕРТИФИКАТ
+========================= */
+
 .certificate-container {
     width: 100%;
+
     position: relative;
 }
 
+
+/* =========================
+   ТЕЛЕФОНҒА БЕЙІМДЕУ
+========================= */
+
 @media (max-width: 600px) {
+
     .recipient-name {
         font-size: 16px !important;
+
         top: 38% !important;
+
         white-space: normal !important;
+
         width: 80% !important;
     }
+
     .cert-date {
         font-size: 10px !important;
+
         bottom: 14% !important;
     }
+
     .cert-signature {
         font-size: 10px !important;
+
         bottom: 14% !important;
+    }
+
+    .profile-btn {
+        font-size: 14px;
+
+        padding: 9px 16px;
     }
 }
 
-/* Басып шығару */
+
+/* =========================
+   БАСЫП ШЫҒАРУ
+========================= */
+
 @media print {
-    .btn-group, .books-section, button {
+
+    .btn-group,
+    .books-section,
+    button,
+    .profile-btn {
         display: none;
     }
 }
