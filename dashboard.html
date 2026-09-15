@@ -183,7 +183,18 @@ if (currentUser) {
     ];
    // Получаем email текущего пользователя
 
-function getUserEmail() {
+function getUserEmail()
+function isDeveloper() {
+    let currentUser = JSON.parse(
+        localStorage.getItem('currentUser')
+    );
+
+    if (!currentUser) {
+        return false;
+    }
+
+    return currentUser.role === 'developer';
+}{
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
     if (currentUser && currentUser.email) {
@@ -197,6 +208,11 @@ function getProgressKey(lessonId) {
 }
 // Проверяем, какие уроки открыты
 function getUnlockedLessons() {
+    // Разработчику доступны все уроки
+    if (isDeveloper()) {
+        return [1, 2, 3, 4, 5, 6];
+    }
+    // Обычному пользователю сначала доступен только 1 урок
     let unlocked = [1];
     for (let i = 2; i <= 6; i++) {
         if (
