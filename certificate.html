@@ -77,17 +77,46 @@
 </div>
 <script>
     function loadCertificate() {
-        for(let i=1; i<=6; i++) if(localStorage.getItem('lesson'+i+'_test_passed') !== 'true') { alert('Сіз әлі сертификат ала алмайсыз!'); window.location.href='dashboard.html'; return; }
-        let user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-        document.getElementById('recipientName').innerHTML = user.fullname || 'Құрметті оқушы';
-        let d = new Date();
-        let day = d.getDate().toString().padStart(2,'0'), month = (d.getMonth()+1).toString().padStart(2,'0'), year = d.getFullYear();
-        document.getElementById('certDate').innerHTML = day+'.'+month+'.'+year;
-        document.getElementById('certCode').innerHTML = 'Сертификат коды: KZ'+Date.now().toString(36).toUpperCase();
+    let user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+    let developer = user.role === 'developer';
+
+    if (!developer) {
+        for (let i = 1; i <= 6; i++) {
+            let progressKey = user.email + '_lesson' + i + '_test_passed';
+
+            if (localStorage.getItem(progressKey) !== 'true') {
+                alert('Сіз әлі сертификат ала алмайсыз!');
+                window.location.href = 'dashboard.html';
+                return;
+            }
+        }
     }
-    function downloadAllBooks() { window.location.href='Туынды_сөздер.pdf'; setTimeout(()=>window.location.href='Сатылай_кешенді_талдау.pdf',500); }
-    function backToDashboard() { window.location.href='dashboard.html'; }
-    loadCertificate();
+
+    document.getElementById('recipientName').innerHTML =
+        user.fullname || 'Құрметті оқушы';
+
+    let d = new Date();
+    let day = d.getDate().toString().padStart(2, '0');
+    let month = (d.getMonth() + 1).toString().padStart(2, '0');
+    let year = d.getFullYear();
+
+    document.getElementById('certDate').innerHTML =
+        day + '.' + month + '.' + year;
+
+    document.getElementById('certCode').innerHTML =
+        'Сертификат коды: KZ' + Date.now().toString(36).toUpperCase();
+}
+
+function downloadAllBooks() {
+    window.location.href = 'Туынды_сөздер.pdf';
+    setTimeout(() => window.location.href = 'Сатылай_кешенді_талдау.pdf', 500);
+}
+
+function backToDashboard() {
+    window.location.href = 'dashboard.html';
+}
+
+loadCertificate();
 </script>
 </body>
 </html>
