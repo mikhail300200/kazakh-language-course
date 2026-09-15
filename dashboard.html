@@ -40,36 +40,41 @@
         .red-btn { background: #f44336; color: white; border: none; padding: 10px 20px; border-radius: 40px; cursor: pointer; font-size: 16px; display: block; margin: 20px auto 0; width: 200px; }
         .gold-btn { background: gold; color: black; font-weight: bold; padding: 12px 25px; border: none; border-radius: 40px; cursor: pointer; margin-top: 20px; width: 100%; }
         @media (max-width: 600px) { .container { padding: 20px; } }
-        /* Кнопка профиля */
+        /* =========================
+   КНОПКА ПРОФИЛЯ
+========================= */
 
-a.profile-btn {
-    width: fit-content;
-    margin-left: auto;
-    margin-bottom: 20px;
-
-    display: flex;
+.profile-btn {
+    display: flex !important;
     align-items: center;
     gap: 10px;
 
-    padding: 7px 15px 7px 7px;
+    width: fit-content;
+    margin: 0 0 20px auto;
 
-    background: #ffffff;
-    color: #5a3a1a;
+    padding: 7px 14px 7px 7px;
 
-    border: 1px solid #e4c89f;
+    background: linear-gradient(135deg, #ffffff, #fff8ec);
+    color: #5A3A1A !important;
+
+    border: 1px solid #DDBF8C;
     border-radius: 50px;
 
-    text-decoration: none;
+    text-decoration: none !important;
 
     font-size: 15px;
     font-weight: 600;
 
-    box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+    box-shadow: 0 4px 12px rgba(90, 58, 26, 0.15);
 
-    transition: 0.3s;
+    cursor: pointer;
+    transition: all 0.25s ease;
 }
 
-a.profile-btn .profile-avatar {
+
+/* Круг с буквой R */
+
+.profile-avatar {
     width: 38px;
     height: 38px;
 
@@ -77,25 +82,66 @@ a.profile-btn .profile-avatar {
     align-items: center;
     justify-content: center;
 
-    background: #8B5A2B;
+    flex-shrink: 0;
+
+    background: linear-gradient(135deg, #8B5A2B, #5A3A1A);
     color: white;
 
     border-radius: 50%;
 
     font-size: 18px;
     font-weight: bold;
+
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
 }
 
-a.profile-btn .profile-arrow {
+
+/* Стрелочка */
+
+.profile-arrow {
     font-size: 22px;
+    line-height: 1;
+
     color: #8B5A2B;
+
+    transition: transform 0.25s;
 }
 
-a.profile-btn:hover {
-    background: #fff8ed;
+
+/* Наведение */
+
+.profile-btn:hover {
+    background: #fff3df;
+
+    border-color: #C99C61;
+
     transform: translateY(-2px);
 
-    box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    box-shadow: 0 7px 18px rgba(90,58,26,0.20);
+}
+
+
+/* Стрелочка двигается */
+
+.profile-btn:hover .profile-arrow {
+    transform: translateX(3px);
+}
+
+
+/* Телефон */
+
+@media (max-width: 600px) {
+
+    .profile-btn {
+        font-size: 14px;
+        padding: 6px 12px 6px 6px;
+    }
+
+    .profile-avatar {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+    }
 }
     </style>
 </head>
