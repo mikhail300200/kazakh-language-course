@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="kk">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Курс беті - Қазақ тілі</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
     <style>
         * {
@@ -13,10 +16,14 @@
         }
 
         body {
-            background: linear-gradient(
-                rgba(255, 248, 225, 0.95),
-                rgba(245, 222, 179, 0.9)
-            );
+            background:
+                linear-gradient(
+                    rgba(255, 248, 225, 0.95),
+                    rgba(245, 222, 179, 0.9)
+                ),
+                url('https://www.transparenttextures.com/patterns/kazakh-ornament.png');
+
+            background-size: auto, 200px;
             font-family: 'Segoe UI', 'Roboto', 'Noto Sans', sans-serif;
             min-height: 100vh;
             padding: 20px;
@@ -26,61 +33,12 @@
             max-width: 700px;
             margin: 0 auto;
             background: rgba(255, 255, 245, 0.95);
-            border-radius: 40px;
+            border-radius: 50px;
             padding: 30px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 1px solid #E6D3B3;
         }
 
-        h1 {
-            color: #5A3A1A;
-            text-align: center;
-            margin-bottom: 25px;
-        }
-
-        /* ПРОФИЛЬ */
-        .profile-btn {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: fit-content;
-            margin: 0 0 20px auto;
-            padding: 7px 14px 7px 7px;
-            background: linear-gradient(135deg, #ffffff, #fff8ec);
-            color: #5A3A1A;
-            border: 1px solid #DDBF8C;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 15px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(90,58,26,0.15);
-            transition: 0.25s;
-        }
-
-        .profile-btn:hover {
-            background: #fff3df;
-            transform: translateY(-2px);
-        }
-
-        .profile-avatar {
-            width: 38px;
-            height: 38px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #8B5A2B, #5A3A1A);
-            color: white;
-            border-radius: 50%;
-            font-size: 18px;
-            font-weight: bold;
-        }
-
-        .profile-arrow {
-            font-size: 22px;
-            color: #8B5A2B;
-        }
-
-        /* САБАҚТАР */
         .lesson-card {
             border: 1px solid #DDBF8C;
             border-radius: 20px;
@@ -93,11 +51,6 @@
         .lesson-card.available {
             cursor: pointer;
             border-left: 5px solid #4CAF50;
-        }
-
-        .lesson-card.available:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
 
         .lesson-card.locked {
@@ -115,17 +68,12 @@
             margin-top: 8px;
         }
 
-        /* ПРОГРЕСС */
-        .progress-area {
-            margin-top: 30px;
-        }
-
         .progress-bar {
             width: 100%;
             background: #e0e0e0;
             border-radius: 10px;
             height: 10px;
-            overflow: hidden;
+            margin-top: 10px;
         }
 
         .progress-fill {
@@ -133,79 +81,14 @@
             height: 10px;
             border-radius: 10px;
             width: 0%;
-            transition: 0.4s;
         }
 
-        #progressText {
-            text-align: center;
-            margin-top: 10px;
-            color: #4F2F10;
-            font-weight: 600;
-        }
-
-        /* СЕРТИФИКАТ */
-        .gold-btn {
-            background: gold;
-            color: black;
-            font-weight: bold;
-            padding: 13px 25px;
-            border: none;
-            border-radius: 40px;
-            cursor: pointer;
-            margin-top: 20px;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        /* DEVELOPER ПАНЕЛЬ */
-        #developerPanel {
-            margin-top: 30px;
-            padding: 25px;
-            background: linear-gradient(135deg, #fffaf0, #f7ead5);
-            border: 2px solid #DDBF8C;
-            border-radius: 30px;
-            box-shadow: 0 8px 20px rgba(90,58,26,0.15);
-        }
-
-        #developerPanel h2 {
-            text-align: center;
+        h1 {
             color: #5A3A1A;
-            margin-bottom: 20px;
-        }
-
-        .dev-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 12px;
-        }
-
-        .dev-grid button,
-        .dev-grid a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 55px;
-            padding: 12px;
-            border: none;
-            border-radius: 15px;
-            background: #8B5A2B;
-            color: white;
-            font-family: inherit;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-            text-decoration: none;
             text-align: center;
-            transition: 0.2s;
+            margin-bottom: 25px;
         }
 
-        .dev-grid button:hover,
-        .dev-grid a:hover {
-            background: #6F451F;
-            transform: translateY(-2px);
-        }
-
-        /* ШЫҒУ */
         .red-btn {
             background: #f44336;
             color: white;
@@ -215,5 +98,109 @@
             cursor: pointer;
             font-size: 16px;
             display: block;
-            margin: 25px auto 0;
-            width: 200px
+            margin: 20px auto 0;
+            width: 200px;
+        }
+
+        .gold-btn {
+            background: gold;
+            color: black;
+            font-weight: bold;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        /* =========================
+           ПРОФИЛЬ
+        ========================= */
+
+        .profile-btn {
+            display: flex !important;
+            align-items: center;
+            gap: 10px;
+            width: fit-content;
+            margin: 0 0 20px auto;
+            padding: 7px 14px 7px 7px;
+            background: linear-gradient(135deg, #ffffff, #fff8ec);
+            color: #5A3A1A !important;
+            border: 1px solid #DDBF8C;
+            border-radius: 50px;
+            text-decoration: none !important;
+            font-size: 15px;
+            font-weight: 600;
+            box-shadow: 0 4px 12px rgba(90, 58, 26, 0.15);
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+
+        .profile-avatar {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #8B5A2B, #5A3A1A);
+            color: white;
+            border-radius: 50%;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+
+        .profile-arrow {
+            font-size: 22px;
+            line-height: 1;
+            color: #8B5A2B;
+            transition: transform 0.25s;
+        }
+
+        .profile-btn:hover {
+            background: #fff3df;
+            border-color: #C99C61;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 18px rgba(90,58,26,0.20);
+        }
+
+        .profile-btn:hover .profile-arrow {
+            transform: translateX(3px);
+        }
+
+        /* =========================
+           DEVELOPER ПАНЕЛЬ
+        ========================= */
+
+        #developerPanel {
+            margin-top: 25px;
+        }
+
+        #developerPanel h2 {
+            color: #5A3A1A;
+            margin-bottom: 12px;
+        }
+
+        .dev-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .dev-grid button,
+        .dev-grid a {
+            background: #f5f5f5;
+            color: #222;
+            border: 1px solid #999;
+            border-radius: 4px;
+            padding: 5px 9px;
+            font-family: inherit;
+            font-size: 14px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .dev-grid button
