@@ -242,35 +242,6 @@
     <!-- САБАҚТАР -->
     <div id="lessonsList"></div>
 
-    <!-- DEVELOPER ПАНЕЛЬ -->
-    <div id="developerPanel" style="display:none;">
-
-        <h2>👨‍💻 Әзірлеуші панелі</h2>
-
-        <div class="dev-grid">
-
-            <button onclick="openLesson(1)">📖 1-сабақ</button>
-            <button onclick="openLesson(2)">📖 2-сабақ</button>
-            <button onclick="openLesson(3)">📖 3-сабақ</button>
-            <button onclick="openLesson(4)">📖 4-сабақ</button>
-            <button onclick="openLesson(5)">📖 5-сабақ</button>
-            <button onclick="openLesson(6)">📖 6-сабақ</button>
-
-            <button onclick="window.location.href='certificate.html'">
-                🎓 Сертификат
-            </button>
-
-            <a href="Туынды_сөздер.pdf" target="_blank">
-                📕 Туынды сөздер
-            </a>
-
-            <a href="Сатылай_кешенді_талдау.pdf" target="_blank">
-                📘 Сатылай кешенді талдау
-            </a>
-
-        </div>
-    </div>
-
     <!-- ПРОГРЕСС -->
     <div style="margin-top:30px;">
 
@@ -558,22 +529,6 @@
         window.location.href =
             'lesson.html';
     }
-
-
-    // ==========================================
-    // DEVELOPER ПАНЕЛЬ
-    // ==========================================
-
-    function loadDeveloperPanel() {
-
-        if (isDeveloper()) {
-
-            document.getElementById(
-                'developerPanel'
-            ).style.display = 'block';
-        }
-    }
-
 
     // ==========================================
     // ШЫҒУ
