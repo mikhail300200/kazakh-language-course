@@ -168,7 +168,9 @@ let taskDone = localStorage.getItem(
             document.getElementById('videoPlayer').innerHTML = '<p style="color:orange; text-align:center;">⚠️ Видео әлі қосылмаған. Кейінірек қосылады.</p>';
         }
 
-        let savedAnswer = localStorage.getItem('lesson'+lessonId+'_answer');
+        let savedAnswer = localStorage.getItem(
+    getLessonKey('answer')
+);
         if(savedAnswer) document.getElementById('answer').value = savedAnswer;
         if(taskDone) document.getElementById('nextBtn').style.display = 'inline-block';
     }
@@ -239,7 +241,6 @@ function loadTheme() {
     }
 
 }
-
 
 loadTheme();
 loadLesson();
