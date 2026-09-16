@@ -107,57 +107,223 @@
         for(let i=0; i<opts.length; i++) { if(i===optIdx) opts[i].classList.add('selected'); else opts[i].classList.remove('selected'); }
     }
 
-    function submitQuiz() {
-        for(let i=0; i<userAnswers.length; i++) if(userAnswers[i]===-1) { alert(`${i+1}-сұраққа жауап берілмеген!`); return; }
-        let correct=0; for(let i=0; i<quiz.questions.length; i++) if(userAnswers[i]===quiz.questions[i].correct) correct++;
-        let percent = (correct/quiz.questions.length)*100, passed = percent >= quiz.passingScore;
-        let resultHtml = `<div class="result-box ${passed?'pass':'fail'}"><h2>${passed?'🎉 ҚҰТТЫҚТАЙМЫН!':'😔 ӨКІНІШКЕ ҚАРАЙ'}</h2><p>${correct}/${quiz.questions.length} дұрыс (${Math.round(percent)}%)</p>${passed?'<p>✅ Келесі сабақ ашылды!</p>':'<p>❌ 70% жинау керек</p>'}${passed?'<button onclick="nextLesson()">➡️ Келесі сабаққа өту</button>':'<button onclick="retryQuiz()">🔄 Қайта тапсыру</button>'}</div>`;
-        document.getElementById('resultContainer').innerHTML = resultHtml;
-        document.getElementById('submitBtn').disabled = true;
+function submitQuiz() {
+
+    // Барлық сұраққа жауап берілгенін тексеру
+    for (let i = 0; i < userAnswers.length; i++) {
+
+        if (userAnswers[i] === -1) {
+            alert(`${i + 1}-сұраққа жауап берілмеген!`);
+            return;
+        }
+
+    }
+
+
+    // Дұрыс жауаптарды санау
+    let correct = 0;
+
+    for (let i = 0; i < quiz.questions.length; i++) {
+
+        if (
+            userAnswers[i] ===
+            quiz.questions[i].correct
+        ) {
+            correct++;
+        }
+
+    }
+
+
+    // Пайыз
+    let percent =
+        (correct / quiz.questions.length) * 100;
+
+
+    let passed =
+        percent >= quiz.passingScore;
+
+
+    // ==============================
+    // НӘТИЖЕНІ САҚТАУ
+    // ==============================
+
+    let currentUser =
+        JSON.parse(
+            localStorage.getItem("currentUser") || "{}"
+        );
+
+
+    if (currentUser.email) {
+
+        // 5 сұрақты 10 балдық жүйеге айналдырамыз
+        let score10 =
+            Math.round(
+                (correct / quiz.questions.length) * 10
+            );
+
+
+        // Мысалы:
+        // email_lesson2_score
+
+        let scoreKey =
+            currentUser.email +
+            "_lesson" +
+            lessonId +
+            "_score";
+
+
+        localStorage.setItem(
+            scoreKey,
+            score10.toString()
+        );
+
+
+        // Пайыз
+
+        let percentKey =
+            currentUser.email +
+            "_lesson" +
+            lessonId +
+            "_percent";
+
+
+        localStorage.setItem(
+            percentKey,
+            Math.round(percent).toString()
+        );
+
+
+        // Тесттен өтсе
+
         if (passed) {
-let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-if (currentUser && currentUser.email) {
+            let progressKey =
+                currentUser.email +
+                "_lesson" +
+                lessonId +
+                "_test_passed";
 
-    // Нәтижені 10 балдық жүйеге айналдырамыз
-    let score10 = Math.round(
-        (correct / quiz.questions.length) * 10
-    );
 
-    // Нәтижені сақтаймыз
-    let scoreKey =
-        currentUser.email + '_lesson' + lessonId + '_score';
+            localStorage.setItem(
+                progressKey,
+                "true"
+            );
 
-    localStorage.setItem(scoreKey, score10);
+        }
 
-    // Пайызын да сақтаймыз
-    let percentKey =
-        currentUser.email + '_lesson' + lessonId + '_percent';
 
-    localStorage.setItem(
-        percentKey,
-        Math.round(percent)
-    );
+        // Тексеру үшін Console-ға шығарамыз
+        console.log("Нәтиже сақталды:");
+        console.log("Сабақ:", lessonId);
+        console.log("Балл:", score10 + "/10");
+        console.log("Пайыз:", Math.round(percent) + "%");
+        console.log("Key:", scoreKey);
 
-    // Тесттен өткен жағдайда сабақ аяқталды деп белгілейміз
-    if (passed) {
-        let progressKey =
-            currentUser.email + '_lesson' + lessonId + '_test_passed';
-
-        localStorage.setItem(progressKey, 'true');
     }
+
+
+
+    // ==============================
+    // НӘТИЖЕНІ ЭКРАНҒА ШЫҒАРУ
+    // ==============================
+
+    let resultHtml = `
+        <div class="result-box ${passed ? 'pass' : 'fail'}">
+
+            <h2>
+                ${passed
+                    ? '🎉 ҚҰТТЫҚТАЙМЫН!'
+                    : '😔 ӨКІНІШКЕ ҚАРАЙ'}
+            </h2>
+
+            <p>
+                ${correct}/${quiz.questions.length}
+                дұрыс
+                (${Math.round(percent)}%)
+            </p>
+
+            ${
+                passed
+                ? '<p>✅ Келесі сабақ ашылды!</p>'
+                : '<p>❌ 70% жинау керек</p>'
+            }
+
+            ${
+                passed
+                ? '<button onclick="nextLesson()">➡️ Келесі сабаққа өту</button>'
+                : '<button onclick="retryQuiz()">🔄 Қайта тапсыру</button>'
+            }
+
+        </div>
+    `;
+
+
+    document.getElementById(
+        "resultContainer"
+    ).innerHTML =
+        resultHtml;
+
+
+    document.getElementById(
+        "submitBtn"
+    ).disabled =
+        true;
+
+
+
+    // ==============================
+    // GOOGLE SHEETS
+    // ==============================
+
+    try {
+
+        let webhookUrl =
+            "https://script.google.com/macros/s/AKfycbxWF7OHEYMIDi1dTNMSY6_QDYXShvX16SL9ExxaMU-mOCTgzuxGJ6nN0c_ZZNUB-c4/exec";
+
+
+        let url =
+            webhookUrl +
+
+            "?fullname=" +
+            encodeURIComponent(
+                currentUser.fullname ||
+                "Құрметті оқушы"
+            ) +
+
+            "&email=" +
+            encodeURIComponent(
+                currentUser.email ||
+                "белгісіз"
+            ) +
+
+            "&lessonId=" +
+            lessonId +
+
+            "&score=" +
+            Math.round(percent);
+
+
+        fetch(
+            url,
+            {
+                method: "GET",
+                mode: "no-cors"
+            }
+        );
+
+    }
+
+    catch (e) {
+
+        console.log(
+            "Google Sheets қатесі:",
+            e
+        );
+
+    }
+
 }
-
-        // ============ GOOGLE SHEETS-КЕ НӘТИЖЕ ЖІБЕРУ ============
-        try {
-            let user = JSON.parse(localStorage.getItem('currentUser') || '{}');
-            let webhookUrl = "https://script.google.com/macros/s/AKfycbxWF7OHEYMIDi1dTNMSY6_QDYXShvX16SL9ExxaMU-mOCTgzuxGJ6nN0c_ZZNUB-c4/exec";
-            let url = webhookUrl + "?fullname=" + encodeURIComponent(user.fullname || "Құрметті оқушы") + "&email=" + encodeURIComponent(user.email || "белгісіз") + "&lessonId=" + lessonId + "&score=" + Math.round(percent);
-            
-            fetch(url, { method: "GET", mode: "no-cors" });
-        } catch(e) { console.log("Қате:", e); }
-        // =========================================================
-    }
 
     function nextLesson() { window.location.href = 'dashboard.html'; }
     function retryQuiz() { userAnswers.fill(-1); loadQuiz(); document.getElementById('resultContainer').innerHTML = ''; document.getElementById('submitBtn').disabled = false; }
