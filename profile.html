@@ -431,153 +431,105 @@
     // ТЕСТ НӘТИЖЕЛЕРІ
     // ==============================
 
-    function loadResults() {
+function loadResults() {
 
-        let resultsList =
-            document.getElementById(
-                "resultsList"
-            );
+    let resultsList = document.getElementById("resultsList");
+    resultsList.innerHTML = "";
 
+    let totalScore = 0;
+    let resultCount = 0;
 
-        resultsList.innerHTML = "";
+    for (let i = 1; i <= 6; i++) {
 
+        let scoreKey =
+            currentUser.email +
+            "_lesson" +
+            i +
+            "_score";
 
-        let totalScore = 0;
-        let resultCount = 0;
+        let percentKey =
+            currentUser.email +
+            "_lesson" +
+            i +
+            "_percent";
 
+        let score = localStorage.getItem(scoreKey);
+        let testPercent = localStorage.getItem(percentKey);
 
-        for (let i = 1; i <= 6; i++) {
+        let item = document.createElement("div");
+        item.className = "result-item";
 
+        if (score !== null) {
 
-            let scoreKey =
-                currentUser.email +
-                "_lesson" +
-                i +
-                "_score";
+            // Бұрын /10 форматында сақталған нәтижені
+            // /5 форматына айналдырамыз
+            let score5 = Number(score);
 
-
-            let percentKey =
-                currentUser.email +
-                "_lesson" +
-                i +
-                "_percent";
-
-
-            let score =
-                localStorage.getItem(
-                    scoreKey
-                );
-
-
-            let testPercent =
-                localStorage.getItem(
-                    percentKey
-                );
-
-
-            let item =
-                document.createElement(
-                    "div"
-                );
-
-
-            item.className =
-                "result-item";
-
-
-            // Егер тест тапсырылған болса
-
-            if (score !== null) {
-
-                item.innerHTML = `
-                    <span class="result-lesson">
-                        📘 ${i}-сабақ
-                    </span>
-
-                    <span class="result-score">
-                        ${score}/10
-                        &nbsp;
-                        ${testPercent}%
-                        ✅
-                    </span>
-                `;
-
-
-                totalScore +=
-                    Number(score);
-
-                resultCount++;
-
+            if (score5 > 5) {
+                score5 = Math.round(score5 / 2);
             }
 
-            // Егер әлі тапсырылмаса
+            // Пайызға қарап өтті/өтпеді
+            let passed = Number(testPercent) >= 70;
 
-            else {
+            item.innerHTML = `
+                <span class="result-lesson">
+                    📘 ${i}-сабақ
+                </span>
 
-                item.innerHTML = `
-                    <span class="result-lesson">
-                        📘 ${i}-сабақ
-                    </span>
+                <span class="${passed ? 'result-score' : 'result-empty'}">
+                    ${score5}/5
+                    &nbsp;
+                    ${testPercent}%
+                    ${passed ? '✅' : '❌'}
+                </span>
+            `;
 
-                    <span class="result-empty">
-                        — Әлі тапсырылмады
-                    </span>
-                `;
+            totalScore += score5;
+            resultCount++;
 
-            }
+        } else {
 
+            item.innerHTML = `
+                <span class="result-lesson">
+                    📘 ${i}-сабақ
+                </span>
 
-            resultsList.appendChild(
-                item
-            );
-
+                <span class="result-empty">
+                    — Әлі тапсырылмады
+                </span>
+            `;
         }
 
-
-
-        // ==========================
-        // ОРТАША НӘТИЖЕ
-        // ==========================
-
-        if (resultCount > 0) {
-
-            let average =
-                (
-                    totalScore /
-                    resultCount
-                ).toFixed(1);
-
-
-            let averagePercent =
-    Math.round(
-        (average / 5) * 100
-    );
-
-
-            document.getElementById(
-                "averageResult"
-            ).textContent =
-                "📈 Орташа нәтиже: " +
-                average +
-                "/5 (" +
-                averagePercent +
-                "%)";
-
-        }
-
-        else {
-
-            document.getElementById(
-                "averageResult"
-            ).textContent =
-                "📈 Орташа нәтиже: —";
-
-        }
-
+        resultsList.appendChild(item);
     }
 
 
-    loadResults();
+    // ОРТАША НӘТИЖЕ
+
+    if (resultCount > 0) {
+
+        let average =
+            totalScore / resultCount;
+
+        let averagePercent =
+            Math.round((average / 5) * 100);
+
+        document.getElementById("averageResult").textContent =
+            "📈 Орташа нәтиже: " +
+            average.toFixed(1) +
+            "/5 (" +
+            averagePercent +
+            "%)";
+
+    } else {
+
+        document.getElementById("averageResult").textContent =
+            "📈 Орташа нәтиже: —";
+    }
+}
+
+loadResults();
 
 
 
