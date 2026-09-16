@@ -115,9 +115,32 @@
         document.getElementById('resultContainer').innerHTML = resultHtml;
         document.getElementById('submitBtn').disabled = true;
         if (passed) {
-    let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+let currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-    if (currentUser && currentUser.email) {
+if (currentUser && currentUser.email) {
+
+    // Нәтижені 10 балдық жүйеге айналдырамыз
+    let score10 = Math.round(
+        (correct / quiz.questions.length) * 10
+    );
+
+    // Нәтижені сақтаймыз
+    let scoreKey =
+        currentUser.email + '_lesson' + lessonId + '_score';
+
+    localStorage.setItem(scoreKey, score10);
+
+    // Пайызын да сақтаймыз
+    let percentKey =
+        currentUser.email + '_lesson' + lessonId + '_percent';
+
+    localStorage.setItem(
+        percentKey,
+        Math.round(percent)
+    );
+
+    // Тесттен өткен жағдайда сабақ аяқталды деп белгілейміз
+    if (passed) {
         let progressKey =
             currentUser.email + '_lesson' + lessonId + '_test_passed';
 
