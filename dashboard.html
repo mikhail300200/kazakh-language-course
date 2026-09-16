@@ -224,6 +224,100 @@
                 font-size: 16px;
             }
         }
+
+        /* =========================
+   ХАБАРЛАМАЛАР
+========================= */
+
+.top-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.notification-wrapper {
+    position: relative;
+}
+
+.notification-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid #DDBF8C;
+    background: linear-gradient(135deg, #ffffff, #fff8ec);
+    cursor: pointer;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(90,58,26,0.15);
+    position: relative;
+}
+
+.notification-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #f44336;
+    color: white;
+    min-width: 21px;
+    height: 21px;
+    border-radius: 50%;
+    font-size: 12px;
+    font-weight: bold;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+
+.notification-panel {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 62px;
+    width: 340px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: white;
+    border: 1px solid #DDBF8C;
+    border-radius: 20px;
+    padding: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+    z-index: 1000;
+}
+
+.notification-panel.show {
+    display: block;
+}
+
+.notification-panel h3 {
+    color: #5A3A1A;
+    margin-bottom: 12px;
+}
+
+.notification-item {
+    background: #f7f3ed;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 8px;
+    font-size: 14px;
+}
+
+.notification-empty {
+    text-align: center;
+    color: #999;
+    padding: 20px 5px;
+}
+
+.clear-notifications {
+    width: 100%;
+    border: none;
+    background: #8B5A2B;
+    color: white;
+    padding: 9px;
+    border-radius: 20px;
+    cursor: pointer;
+    margin-top: 5px;
+}
     </style>
 </head>
 
@@ -231,11 +325,61 @@
 
 <div class="container">
 
-    <a href="profile.html" class="profile-btn">
-        <span class="profile-avatar" id="profileAvatar">R</span>
+    <div class="top-actions">
+
+    <div class="notification-wrapper">
+
+        <button
+            class="notification-btn"
+            onclick="toggleNotifications()">
+
+            🔔
+
+            <span
+                class="notification-count"
+                id="notificationCount">
+                0
+            </span>
+
+        </button>
+
+        <div
+            class="notification-panel"
+            id="notificationPanel">
+
+            <h3>🔔 Хабарламалар</h3>
+
+            <div id="notificationList"></div>
+
+            <button
+                class="clear-notifications"
+                onclick="clearNotifications()">
+
+                ✓ Барлығын оқылды деп белгілеу
+
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <a href="profile.html" class="profile-btn"
+       style="margin:0;">
+
+        <span
+            class="profile-avatar"
+            id="profileAvatar">
+            R
+        </span>
+
         <span>Менің профилім</span>
+
         <span class="profile-arrow">›</span>
+
     </a>
+
+</div>
 
     <h1>📚 Қазақ тілі курсы</h1>
 
