@@ -155,12 +155,8 @@ function submitQuiz() {
 
 
     if (currentUser.email) {
-
-        // 5 сұрақты 10 балдық жүйеге айналдырамыз
-        let score10 =
-            Math.round(
-                (correct / quiz.questions.length) * 10
-            );
+        
+    let score10 = correct;
 
 
         // Мысалы:
