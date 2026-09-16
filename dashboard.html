@@ -699,6 +699,100 @@
     // ІСКЕ ҚОСУ
     // ==========================================
 
+    // ==========================================
+// 🔔 ХАБАРЛАМАЛАР
+// ==========================================
+
+function getNotificationKey() {
+    return getUserEmail() + '_notifications';
+}
+
+
+function getNotifications() {
+
+    return JSON.parse(
+        localStorage.getItem(
+            getNotificationKey()
+        ) || '[]'
+    );
+}
+
+
+function loadNotifications() {
+
+    let notifications =
+        getNotifications();
+
+    let list =
+        document.getElementById(
+            'notificationList'
+        );
+
+    let count =
+        document.getElementById(
+            'notificationCount'
+        );
+
+
+    if (notifications.length === 0) {
+
+        list.innerHTML = `
+            <div class="notification-empty">
+                Жаңа хабарлама жоқ
+            </div>
+        `;
+
+        count.style.display = 'none';
+
+        return;
+    }
+
+
+    count.textContent =
+        notifications.length;
+
+    count.style.display =
+        'flex';
+
+
+    list.innerHTML =
+        notifications
+            .slice()
+            .reverse()
+            .map(notification => `
+                <div class="notification-item">
+                    ${notification.text}
+                </div>
+            `)
+            .join('');
+}
+
+
+function toggleNotifications() {
+
+    document.getElementById(
+        'notificationPanel'
+    ).classList.toggle('show');
+}
+
+
+function clearNotifications() {
+
+    localStorage.setItem(
+        getNotificationKey(),
+        JSON.stringify([])
+    );
+
+    loadNotifications();
+
+    document.getElementById(
+        'notificationPanel'
+    ).classList.remove('show');
+}
+
+
+loadNotifications();
+    
     loadDashboard();
 
 </script>
