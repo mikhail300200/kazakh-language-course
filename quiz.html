@@ -192,82 +192,75 @@ function submitQuiz() {
 
         // Тесттен өтсе
 
-       if (passed) {
+    if (passed) {
 
+    // Сабақтан өткенін сақтау
     let progressKey =
         currentUser.email +
         "_lesson" +
         lessonId +
         "_test_passed";
 
-
-    // Бұрын осы тесттен өткен бе?
-    let alreadyPassed =
-        localStorage.getItem(progressKey) === "true";
-
-
-    // Прогресті сақтау
     localStorage.setItem(
         progressKey,
         "true"
     );
 
 
-    // Тек бірінші рет өткен кезде хабарлама жасаймыз
-    if (!alreadyPassed) {
+    // =========================
+    // 🔔 ХАБАРЛАМА ҚОСУ
+    // =========================
 
-        let notificationKey =
-            currentUser.email +
-            "_notifications";
+    let notificationKey =
+        currentUser.email +
+        "_notifications";
 
-
-        let notifications =
-            JSON.parse(
-                localStorage.getItem(notificationKey) || "[]"
-            );
-
-
-        // Тест нәтижесі
-        notifications.push({
-            text:
-                "🎉 " +
-                lessonId +
-                "-сабақтың тестінен өттіңіз — " +
-                Math.round(percent) +
-                "%!"
-        });
-
-
-        // Келесі сабақ
-        if (lessonId < 6) {
-
-            notifications.push({
-                text:
-                    "🔓 " +
-                    (lessonId + 1) +
-                    "-сабақ ашылды!"
-            });
-
-        }
-
-
-        // 6-сабақ аяқталса
-        if (lessonId === 6) {
-
-            notifications.push({
-                text:
-                    "🎓 Құттықтаймыз! Сертификат қолжетімді болды."
-            });
-
-        }
-
-
-        localStorage.setItem(
-            notificationKey,
-            JSON.stringify(notifications)
+    let notifications =
+        JSON.parse(
+            localStorage.getItem(notificationKey) || "[]"
         );
 
+
+    // Тест нәтижесі туралы хабарлама
+    notifications.push({
+        text:
+            "🎉 " +
+            lessonId +
+            "-сабақтың тестінен өттіңіз — " +
+            Math.round(percent) +
+            "%!"
+    });
+
+
+    // Келесі сабақ ашылды
+    if (lessonId < 6) {
+
+        notifications.push({
+            text:
+                "🔓 " +
+                (lessonId + 1) +
+                "-сабақ ашылды!"
+        });
+
     }
+
+
+    // Соңғы сабақ болса
+    if (lessonId === 6) {
+
+        notifications.push({
+            text:
+                "🎓 Құттықтаймыз! Сертификат қолжетімді болды."
+        });
+
+    }
+
+
+    // Хабарламаларды сақтау
+    localStorage.setItem(
+        notificationKey,
+        JSON.stringify(notifications)
+    );
 
 }
 
