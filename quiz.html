@@ -30,6 +30,42 @@
         .result-box.fail { background: #f44336; color: white; }
         button { background: #8B5A2B; color: white; padding: 12px 25px; border: none; border-radius: 40px; cursor: pointer; font-size: 16px; margin-top: 10px; }
         button.gray { background: #6c757d; }
+        /* =========================
+   🌙 ҚАРАҢҒЫ РЕЖИМ
+========================= */
+
+body.dark-mode {
+    background: #181818;
+    color: #f5f5f5;
+}
+
+body.dark-mode .container {
+    background: #242424;
+    border-color: #555;
+}
+
+body.dark-mode h1 {
+    color: #f5f5f5;
+}
+
+body.dark-mode .question-box {
+    background: #2d2d2d;
+    border-color: #555;
+    color: #f5f5f5;
+}
+
+body.dark-mode .option {
+    background: #333333;
+    color: #f5f5f5;
+    border-color: #666;
+}
+
+/* Таңдалған жауап қоңыр болып қала береді */
+body.dark-mode .option.selected {
+    background: #8B5A2B;
+    color: white;
+    border-color: #8B5A2B;
+}
     </style>
 </head>
 <body>
@@ -380,6 +416,21 @@ function submitQuiz() {
     function nextLesson() { window.location.href = 'dashboard.html'; }
     function retryQuiz() { userAnswers.fill(-1); loadQuiz(); document.getElementById('resultContainer').innerHTML = ''; document.getElementById('submitBtn').disabled = false; }
     function backToDashboard() { window.location.href = 'dashboard.html'; }
+    // ==========================================
+// 🌙 САҚТАЛҒАН РЕЖИМДІ ҚОЛДАНУ
+// ==========================================
+
+function loadTheme() {
+
+    let savedTheme =
+        localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
+}
+    loadTheme();
     loadQuiz();
 </script>
 </body>
