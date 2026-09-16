@@ -203,4 +203,407 @@
             display: inline-block;
         }
 
-        .dev-grid button
+        .dev-grid button:hover,
+        .dev-grid a:hover {
+            background: #e9e9e9;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+
+            .profile-btn {
+                font-size: 14px;
+                padding: 6px 12px 6px 6px;
+            }
+
+            .profile-avatar {
+                width: 34px;
+                height: 34px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="profile.html" class="profile-btn">
+        <span class="profile-avatar" id="profileAvatar">R</span>
+        <span>Менің профилім</span>
+        <span class="profile-arrow">›</span>
+    </a>
+
+    <h1>📚 Қазақ тілі курсы</h1>
+
+    <!-- САБАҚТАР -->
+    <div id="lessonsList"></div>
+
+    <!-- DEVELOPER ПАНЕЛЬ -->
+    <div id="developerPanel" style="display:none;">
+
+        <h2>👨‍💻 Әзірлеуші панелі</h2>
+
+        <div class="dev-grid">
+
+            <button onclick="openLesson(1)">📖 1-сабақ</button>
+            <button onclick="openLesson(2)">📖 2-сабақ</button>
+            <button onclick="openLesson(3)">📖 3-сабақ</button>
+            <button onclick="openLesson(4)">📖 4-сабақ</button>
+            <button onclick="openLesson(5)">📖 5-сабақ</button>
+            <button onclick="openLesson(6)">📖 6-сабақ</button>
+
+            <button onclick="window.location.href='certificate.html'">
+                🎓 Сертификат
+            </button>
+
+            <a href="Туынды_сөздер.pdf" target="_blank">
+                📕 Туынды сөздер
+            </a>
+
+            <a href="Сатылай_кешенді_талдау.pdf" target="_blank">
+                📘 Сатылай кешенді талдау
+            </a>
+
+        </div>
+    </div>
+
+    <!-- ПРОГРЕСС -->
+    <div style="margin-top:30px;">
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <p id="progressText"
+           style="text-align:center; margin-top:10px; color:#4F2F10;">
+        </p>
+
+    </div>
+
+    <button class="red-btn" onclick="logout()">
+        Шығу
+    </button>
+
+</div>
+
+
+<script>
+
+    // ==========================================
+    // КІРУДІ ТЕКСЕРУ
+    // ==========================================
+
+    if (localStorage.getItem('isLoggedIn') !== 'true') {
+        window.location.href = 'index.html';
+    }
+
+
+    // ==========================================
+    // ҚАЗІРГІ ҚОЛДАНУШЫ
+    // ==========================================
+
+    let currentUser = JSON.parse(
+        localStorage.getItem('currentUser')
+    );
+
+
+    // ==========================================
+    // ПРОФИЛЬДЕГІ АВАТАР ӘРПІ
+    // ==========================================
+
+    if (currentUser && currentUser.fullname) {
+
+        let firstLetter =
+            currentUser.fullname
+                .charAt(0)
+                .toUpperCase();
+
+        document.getElementById(
+            'profileAvatar'
+        ).textContent = firstLetter;
+    }
+
+
+    // ==========================================
+    // САБАҚТАР
+    // ==========================================
+
+    const lessons = [
+        { id: 1, title: "1-сабақ", duration: "15 минут" },
+        { id: 2, title: "2-сабақ", duration: "15 минут" },
+        { id: 3, title: "3-сабақ", duration: "15 минут" },
+        { id: 4, title: "4-сабақ", duration: "15 минут" },
+        { id: 5, title: "5-сабақ", duration: "15 минут" },
+        { id: 6, title: "6-сабақ", duration: "15 минут" }
+    ];
+
+
+    // ==========================================
+    // EMAIL
+    // ==========================================
+
+    function getUserEmail() {
+
+        if (currentUser && currentUser.email) {
+            return currentUser.email;
+        }
+
+        return 'guest';
+    }
+
+
+    // ==========================================
+    // DEVELOPER ТЕКСЕРУ
+    // ==========================================
+
+    function isDeveloper() {
+
+        if (!currentUser) {
+            return false;
+        }
+
+        return currentUser.role === 'developer';
+    }
+
+
+    // ==========================================
+    // ЖЕКЕ ПРОГРЕСС КІЛТІ
+    // ==========================================
+
+    function getProgressKey(lessonId) {
+
+        return getUserEmail()
+            + '_lesson'
+            + lessonId
+            + '_test_passed';
+    }
+
+
+    // ==========================================
+    // ҚОЛЖЕТІМДІ САБАҚТАР
+    // ==========================================
+
+    function getUnlockedLessons() {
+
+        // Developer-ге бәрі ашық
+        if (isDeveloper()) {
+            return [1, 2, 3, 4, 5, 6];
+        }
+
+        // Оқушыға бастапқыда тек 1-сабақ
+        let unlocked = [1];
+
+        for (let i = 2; i <= 6; i++) {
+
+            if (
+                localStorage.getItem(
+                    getProgressKey(i - 1)
+                ) === 'true'
+            ) {
+                unlocked.push(i);
+            }
+        }
+
+        return unlocked;
+    }
+
+
+    // ==========================================
+    // DASHBOARD
+    // ==========================================
+
+    function loadDashboard() {
+
+        let unlocked = getUnlockedLessons();
+        let completed = [];
+
+        // Өтілген сабақтарды анықтау
+        for (let i = 1; i <= 6; i++) {
+
+            if (
+                localStorage.getItem(
+                    getProgressKey(i)
+                ) === 'true'
+            ) {
+                completed.push(i);
+            }
+        }
+
+
+        let html = '';
+
+        lessons.forEach(lesson => {
+
+            let isUnlocked =
+                unlocked.includes(lesson.id);
+
+            let isCompleted =
+                completed.includes(lesson.id);
+
+            html += `
+                <div
+                    class="lesson-card ${isUnlocked ? 'available' : 'locked'}"
+                    onclick="${isUnlocked ? `openLesson(${lesson.id})` : ''}"
+                >
+
+                    <div style="
+                        display:flex;
+                        justify-content:space-between;
+                    ">
+
+                        <div>
+
+                            <h3>
+                                📖 ${lesson.title}
+                            </h3>
+
+                            <p>
+                                ⏱️ ${lesson.duration}
+                            </p>
+
+                            ${
+                                isCompleted
+                                ? '<span class="badge">✅ Өтілген</span>'
+                                : ''
+                            }
+
+                        </div>
+
+                        <div>
+                            ${!isUnlocked ? '🔒' : ''}
+                        </div>
+
+                    </div>
+
+                    ${
+                        isCompleted
+                        ? `
+                            <div class="progress-bar">
+                                <div
+                                    class="progress-fill"
+                                    style="width:100%">
+                                </div>
+                            </div>
+                        `
+                        : ''
+                    }
+
+                </div>
+            `;
+        });
+
+
+        document.getElementById(
+            'lessonsList'
+        ).innerHTML = html;
+
+
+        // ======================================
+        // ПРОГРЕСС
+        // ======================================
+
+        let percent =
+            (completed.length / 6) * 100;
+
+        document.getElementById(
+            'progressFill'
+        ).style.width = percent + '%';
+
+        document.getElementById(
+            'progressText'
+        ).innerHTML =
+            `✅ ${completed.length}/6 сабақ өтілді (${Math.round(percent)}%)`;
+
+
+        // ======================================
+        // СЕРТИФИКАТ
+        // ======================================
+
+        if (completed.length === 6 || isDeveloper()) {
+
+            const btn =
+                document.createElement('div');
+
+            btn.innerHTML = `
+                <button
+                    class="gold-btn"
+                    onclick="window.location.href='certificate.html'"
+                >
+                    🎓 СЕРТИФИКАТ АЛУ 🎓
+                </button>
+            `;
+
+            document.getElementById(
+                'lessonsList'
+            ).appendChild(btn);
+        }
+    }
+
+
+    // ==========================================
+    // САБАҚТЫ АШУ
+    // ==========================================
+
+    function openLesson(id) {
+
+        localStorage.setItem(
+            'currentLesson',
+            id
+        );
+
+        window.location.href =
+            'lesson.html';
+    }
+
+
+    // ==========================================
+    // DEVELOPER ПАНЕЛЬ
+    // ==========================================
+
+    function loadDeveloperPanel() {
+
+        if (isDeveloper()) {
+
+            document.getElementById(
+                'developerPanel'
+            ).style.display = 'block';
+        }
+    }
+
+
+    // ==========================================
+    // ШЫҒУ
+    // ==========================================
+
+    function logout() {
+
+        localStorage.removeItem(
+            'isLoggedIn'
+        );
+
+        localStorage.removeItem(
+            'currentUser'
+        );
+
+        alert('Шықтыңыз!');
+
+        window.location.href =
+            'index.html';
+    }
+
+
+    // ==========================================
+    // ІСКЕ ҚОСУ
+    // ==========================================
+
+    loadDashboard();
+    loadDeveloperPanel();
+
+</script>
+
+</body>
+</html>
