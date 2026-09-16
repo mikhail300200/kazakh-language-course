@@ -180,6 +180,52 @@
             background: #c0392b;
         }
 
+        /* =========================
+   🌙 ҚАРАҢҒЫ РЕЖИМ
+========================= */
+
+body.dark-mode {
+    background: #181818;
+    color: #f5f5f5;
+}
+
+body.dark-mode .profile-container {
+    background: #242424;
+    color: #f5f5f5;
+}
+
+body.dark-mode .profile-header h1,
+body.dark-mode .progress-section h3,
+body.dark-mode .results-section h3 {
+    color: #f5f5f5;
+}
+
+body.dark-mode .username {
+    color: #bbbbbb;
+}
+
+body.dark-mode .info-box {
+    background: #333333;
+    color: #f5f5f5;
+}
+
+body.dark-mode .result-item {
+    background: #333333;
+    color: #f5f5f5;
+}
+
+body.dark-mode .average-result {
+    background: #3a3425;
+    color: #ffffff;
+}
+
+body.dark-mode .progress-bar {
+    background: #444444;
+}
+
+body.dark-mode .result-empty {
+    color: #aaaaaa;
+}
     </style>
 
 </head>
@@ -552,7 +598,22 @@ loadResults();
             "index.html";
 
     }
+// ==========================================
+// 🌙 САҚТАЛҒАН РЕЖИМДІ ҚОЛДАНУ
+// ==========================================
 
+function loadTheme() {
+
+    let savedTheme =
+        localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+        document.body.classList.add('dark-mode');
+    }
+
+}
+
+loadTheme();
 </script>
 
 
