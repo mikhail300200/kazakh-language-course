@@ -318,6 +318,68 @@
     cursor: pointer;
     margin-top: 5px;
 }
+
+        /* =========================
+   🌙 ҚАРАҢҒЫ РЕЖИМ
+========================= */
+
+.theme-btn {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    border: 1px solid #DDBF8C;
+    background: linear-gradient(135deg, #ffffff, #fff8ec);
+    cursor: pointer;
+    font-size: 22px;
+    box-shadow: 0 4px 12px rgba(90,58,26,0.15);
+}
+
+/* Қараңғы фон */
+body.dark-mode {
+    background: #181818;
+    color: #f5f5f5;
+}
+
+/* Негізгі контейнерлер */
+body.dark-mode .container,
+body.dark-mode .lesson-card {
+    background: #242424;
+    color: #f5f5f5;
+    border-color: #555;
+}
+
+/* Тақырыптар */
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3 {
+    color: #f5f5f5;
+}
+
+/* Профиль батырмасы */
+body.dark-mode .profile-btn {
+    background: #2d2d2d;
+    color: #ffffff;
+    border-color: #555;
+}
+
+/* Қоңырау */
+body.dark-mode .notification-btn,
+body.dark-mode .theme-btn {
+    background: #2d2d2d;
+    border-color: #555;
+}
+
+/* Хабарламалар терезесі */
+body.dark-mode .notification-panel {
+    background: #242424;
+    border-color: #555;
+}
+
+body.dark-mode .notification-item {
+    background: #333333;
+    color: #ffffff;
+}
+        
     </style>
 </head>
 
@@ -327,6 +389,13 @@
 
     <div class="top-actions">
 
+        <button
+    class="theme-btn"
+    id="themeBtn"
+    onclick="toggleTheme()">
+    🌙
+</button>
+        
     <div class="notification-wrapper">
 
         <button
@@ -790,11 +859,74 @@ function clearNotifications() {
     ).classList.remove('show');
 }
 
+    // ==========================================
+// 🌙 ҚАРАҢҒЫ РЕЖИМ
+// ==========================================
+
+function loadTheme() {
+
+    let savedTheme =
+        localStorage.getItem('theme');
+
+    if (savedTheme === 'dark') {
+
+        document.body.classList.add('dark-mode');
+
+        document.getElementById(
+            'themeBtn'
+        ).textContent = '☀️';
+
+    }
+
+}
+
+
+function toggleTheme() {
+
+    document.body.classList.toggle(
+        'dark-mode'
+    );
+
+    let darkMode =
+        document.body.classList.contains(
+            'dark-mode'
+        );
+
+    if (darkMode) {
+
+        localStorage.setItem(
+            'theme',
+            'dark'
+        );
+
+        document.getElementById(
+            'themeBtn'
+        ).textContent = '☀️';
+
+    } else {
+
+        localStorage.setItem(
+            'theme',
+            'light'
+        );
+
+        document.getElementById(
+            'themeBtn'
+        ).textContent = '🌙';
+
+    }
+
+}
+
+
+loadTheme();
 
 loadNotifications();
     
     loadDashboard();
 
+
+    
 </script>
 
 </body>
