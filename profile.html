@@ -27,18 +27,13 @@
         .avatar {
             width: 100px;
             height: 100px;
-
             margin: 0 auto 15px;
-
             border-radius: 50%;
-
             background: #8B5A2B;
             color: white;
-
             display: flex;
             justify-content: center;
             align-items: center;
-
             font-size: 40px;
             font-weight: bold;
         }
@@ -58,13 +53,9 @@
 
         .info-box {
             background: #f7f3ed;
-
             padding: 15px;
-
             margin-bottom: 12px;
-
             border-radius: 12px;
-
             font-size: 16px;
         }
 
@@ -79,30 +70,80 @@
         .progress-bar {
             width: 100%;
             height: 18px;
-
             background: #ddd;
-
             border-radius: 20px;
-
             overflow: hidden;
         }
 
         .progress-fill {
             width: 0%;
             height: 100%;
-
             background: #4CAF50;
-
             transition: 0.5s;
         }
 
         #progressText {
             text-align: center;
-
             margin-top: 10px;
-
             font-weight: bold;
         }
+
+
+        /* =========================
+           МЕНІҢ НӘТИЖЕЛЕРІМ
+        ========================= */
+
+        .results-section {
+            margin-top: 30px;
+        }
+
+        .results-section h3 {
+            margin-bottom: 15px;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            background: #f7f3ed;
+
+            padding: 14px 16px;
+            margin-bottom: 10px;
+
+            border-radius: 12px;
+        }
+
+        .result-lesson {
+            font-weight: bold;
+        }
+
+        .result-score {
+            font-weight: bold;
+            color: #4CAF50;
+        }
+
+        .result-empty {
+            color: #999;
+        }
+
+        .average-result {
+            margin-top: 15px;
+            padding: 15px;
+
+            background: #fff4d6;
+
+            border-radius: 12px;
+
+            text-align: center;
+            font-weight: bold;
+            font-size: 17px;
+        }
+
+
+        /* =========================
+           КНОПКАЛАР
+        ========================= */
 
         .profile-buttons {
             margin-top: 30px;
@@ -110,19 +151,13 @@
 
         .course-btn {
             display: block;
-
             background: #4CAF50;
             color: white;
-
             text-decoration: none;
             text-align: center;
-
             padding: 13px;
-
             border-radius: 12px;
-
             margin-bottom: 10px;
-
             font-weight: bold;
         }
 
@@ -132,19 +167,12 @@
 
         .logout-btn {
             width: 100%;
-
             background: #e74c3c;
-
             color: white;
-
             border: none;
-
             padding: 13px;
-
             border-radius: 12px;
-
             font-size: 16px;
-
             cursor: pointer;
         }
 
@@ -186,56 +214,39 @@
     <div class="profile-info">
 
         <div class="info-box">
-
             👤 <strong>Пайдаланушы:</strong>
-
-            <span id="fullname">
-                ratmir
-            </span>
-
+            <span id="fullname">ratmir</span>
         </div>
 
 
         <div class="info-box">
-
             📧 <strong>Email:</strong>
-
-            <span id="email">
-                ratmir2004@gmail.com
-            </span>
-
+            <span id="email"></span>
         </div>
 
 
         <div class="info-box">
-
             📚 <strong>Курс:</strong>
-
             Қазақ тілі
-
         </div>
 
 
         <div class="info-box">
-
             🎓 <strong>Сынып:</strong>
-
             5-сынып
-
         </div>
 
     </div>
 
 
 
-    <!-- ПРОГРЕСС -->
+    <!-- ОҚУ ПРОГРЕСІ -->
 
     <div class="progress-section">
 
         <h3>
             📊 Оқу прогресі
         </h3>
-
 
         <div class="progress-bar">
 
@@ -246,7 +257,6 @@
 
         </div>
 
-
         <p id="progressText">
             0 / 6 сабақ өтілді
         </p>
@@ -255,10 +265,32 @@
 
 
 
+    <!-- МЕНІҢ НӘТИЖЕЛЕРІМ -->
+
+    <div class="results-section">
+
+        <h3>
+            📊 Менің нәтижелерім
+        </h3>
+
+        <div id="resultsList">
+        </div>
+
+        <div
+            class="average-result"
+            id="averageResult">
+
+            📈 Орташа нәтиже: —
+
+        </div>
+
+    </div>
+
+
+
     <!-- КНОПКАЛАР -->
 
     <div class="profile-buttons">
-
 
         <a
             href="dashboard.html"
@@ -277,7 +309,6 @@
 
         </button>
 
-
     </div>
 
 
@@ -287,114 +318,103 @@
 
 <script>
 
-    /*
-    Проверяем:
-    вошёл пользователь или нет
-    */
+    // ==============================
+    // АВТОРИЗАЦИЯНЫ ТЕКСЕРУ
+    // ==============================
 
     if (
         localStorage.getItem("isLoggedIn") !== "true"
     ) {
-
         window.location.href = "login.html";
-
     }
 
 
 
-    /*
-    Получаем данные пользователя
-    */
+    // ==============================
+    // ПАЙДАЛАНУШЫ
+    // ==============================
 
     let currentUser =
-        localStorage.getItem("currentUser");
+        JSON.parse(
+            localStorage.getItem("currentUser") || "{}"
+        );
 
 
-    if (currentUser) {
-
-        let user =
-            JSON.parse(currentUser);
-
-
-        document.getElementById("fullname")
-            .textContent =
-            user.fullname || "ratmir";
-
-
-        document.getElementById("username")
-            .textContent =
-            user.fullname || "ratmir";
-
-
-        document.getElementById("email")
-            .textContent =
-            user.email || "ratmir2004@gmail.com";
-
-
-        /*
-        Первая буква имени
-        */
-
-        let firstLetter =
-            (user.fullname || "ratmir")
-            .charAt(0)
-            .toUpperCase();
-
-
-        document.getElementById("avatar")
-            .textContent =
-            firstLetter;
-
+    if (!currentUser.email) {
+        window.location.href = "login.html";
     }
 
 
 
-    /*
-    Считаем пройденные уроки
-    */
+    // Аты-жөні
+
+    document.getElementById("fullname")
+        .textContent =
+        currentUser.fullname || "Пайдаланушы";
+
+
+    document.getElementById("username")
+        .textContent =
+        currentUser.fullname || "Пайдаланушы";
+
+
+    // Email
+
+    document.getElementById("email")
+        .textContent =
+        currentUser.email;
+
+
+    // Аватар
+
+    let firstLetter =
+        (currentUser.fullname || "P")
+        .charAt(0)
+        .toUpperCase();
+
+
+    document.getElementById("avatar")
+        .textContent =
+        firstLetter;
+
+
+
+    // ==============================
+    // ОҚУ ПРОГРЕСІ
+    // ==============================
 
     let completedLessons = 0;
 
 
-    for (
-        let i = 1;
-        i <= 6;
-        i++
-    ) {
+    for (let i = 1; i <= 6; i++) {
+
+        let progressKey =
+            currentUser.email +
+            "_lesson" +
+            i +
+            "_test_passed";
+
 
         if (
-            localStorage.getItem(
-                "lesson" + i + "_test_passed"
-            ) === "true"
+            localStorage.getItem(progressKey)
+            === "true"
         ) {
-
             completedLessons++;
-
         }
 
     }
 
 
-
-    /*
-    Рассчитываем проценты
-    */
-
-    let percent =
+    let progressPercent =
         Math.round(
             completedLessons / 6 * 100
         );
 
 
-
-    /*
-    Показываем прогресс
-    */
-
     document.getElementById(
         "progressFill"
     ).style.width =
-        percent + "%";
+        progressPercent + "%";
 
 
     document.getElementById(
@@ -402,14 +422,168 @@
     ).textContent =
         completedLessons +
         " / 6 сабақ өтілді (" +
-        percent +
+        progressPercent +
         "%)";
 
 
 
-    /*
-    Выход из аккаунта
-    */
+    // ==============================
+    // ТЕСТ НӘТИЖЕЛЕРІ
+    // ==============================
+
+    function loadResults() {
+
+        let resultsList =
+            document.getElementById(
+                "resultsList"
+            );
+
+
+        resultsList.innerHTML = "";
+
+
+        let totalScore = 0;
+        let resultCount = 0;
+
+
+        for (let i = 1; i <= 6; i++) {
+
+
+            let scoreKey =
+                currentUser.email +
+                "_lesson" +
+                i +
+                "_score";
+
+
+            let percentKey =
+                currentUser.email +
+                "_lesson" +
+                i +
+                "_percent";
+
+
+            let score =
+                localStorage.getItem(
+                    scoreKey
+                );
+
+
+            let testPercent =
+                localStorage.getItem(
+                    percentKey
+                );
+
+
+            let item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "result-item";
+
+
+            // Егер тест тапсырылған болса
+
+            if (score !== null) {
+
+                item.innerHTML = `
+                    <span class="result-lesson">
+                        📘 ${i}-сабақ
+                    </span>
+
+                    <span class="result-score">
+                        ${score}/10
+                        &nbsp;
+                        ${testPercent}%
+                        ✅
+                    </span>
+                `;
+
+
+                totalScore +=
+                    Number(score);
+
+                resultCount++;
+
+            }
+
+            // Егер әлі тапсырылмаса
+
+            else {
+
+                item.innerHTML = `
+                    <span class="result-lesson">
+                        📘 ${i}-сабақ
+                    </span>
+
+                    <span class="result-empty">
+                        — Әлі тапсырылмады
+                    </span>
+                `;
+
+            }
+
+
+            resultsList.appendChild(
+                item
+            );
+
+        }
+
+
+
+        // ==========================
+        // ОРТАША НӘТИЖЕ
+        // ==========================
+
+        if (resultCount > 0) {
+
+            let average =
+                (
+                    totalScore /
+                    resultCount
+                ).toFixed(1);
+
+
+            let averagePercent =
+                Math.round(
+                    average * 10
+                );
+
+
+            document.getElementById(
+                "averageResult"
+            ).textContent =
+                "📈 Орташа нәтиже: " +
+                average +
+                "/10 (" +
+                averagePercent +
+                "%)";
+
+        }
+
+        else {
+
+            document.getElementById(
+                "averageResult"
+            ).textContent =
+                "📈 Орташа нәтиже: —";
+
+        }
+
+    }
+
+
+    loadResults();
+
+
+
+    // ==============================
+    // ШЫҒУ
+    // ==============================
 
     function logout() {
 
