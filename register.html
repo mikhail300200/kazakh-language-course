@@ -122,19 +122,78 @@
         <div class="back-link"><a href="index.html">← Басты бетке</a></div>
     </div>
     <script>
-        function register() {
-            let fullname = document.getElementById('fullname').value;
-            let email = document.getElementById('email').value;
-            let password = document.getElementById('password').value;
-            if(fullname === "" || email === "" || password === "") {
-                alert("Барлық өрістерді толтырыңыз!");
-                return;
+       <script>
+async function register() {
+
+    let fullname =
+        document.getElementById('fullname').value.trim();
+
+    let email =
+        document.getElementById('email').value.trim();
+
+    let password =
+        document.getElementById('password').value;
+
+
+    if (
+        fullname === "" ||
+        email === "" ||
+        password === ""
+    ) {
+        alert("Барлық өрістерді толтырыңыз!");
+        return;
+    }
+
+
+    try {
+
+        let response = await fetch(
+            'register.php',
+            {
+                method: 'POST',
+
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+                body: JSON.stringify({
+                    fullname: fullname,
+                    email: email,
+                    password: password
+                })
             }
-            let user = { fullname: fullname, email: email, password: password };
-            localStorage.setItem('user_' + email, JSON.stringify(user));
-            alert("Тіркелу сәтті! Енді кіре аласыз.");
-            window.location.href = "login.html";
+        );
+
+
+        let result = await response.json();
+
+
+        if (result.success) {
+
+            alert(result.message);
+
+            window.location.href =
+                "login.html";
+
+        } else {
+
+            alert(result.message);
+
         }
+
+
+    } catch (error) {
+
+        console.error(error);
+
+        alert(
+            "Сервермен байланысу кезінде қате пайда болды!"
+        );
+
+    }
+
+}
+</script>
     </script>
 </body>
 </html>
