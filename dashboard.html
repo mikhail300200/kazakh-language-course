@@ -389,6 +389,15 @@ body.dark-mode .notification-item {
 
     <div class="top-actions">
 
+        <a
+    href="admin.php"
+    class="admin-btn"
+    id="adminBtn"
+    style="display:none;"
+>
+    ⚙️ Admin панель
+</a>
+
         <button
     class="theme-btn"
     id="themeBtn"
@@ -510,6 +519,15 @@ body.dark-mode .notification-item {
             'profileAvatar'
         ).textContent = firstLetter;
     }
+    
+    if (
+    currentUser &&
+    currentUser.role === 'developer'
+) {
+    document.getElementById(
+        'adminBtn'
+    ).style.display = 'inline-block';
+}
 
 
     // ==========================================
