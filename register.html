@@ -121,77 +121,80 @@
         <p>Аккаунтыңыз бар ма? <a href="login.html">Кіру</a></p>
         <div class="back-link"><a href="index.html">← Басты бетке</a></div>
     </div>
-    <script>
-async function register() {
+ 
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signOut
+} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
 
-    let fullname =
-        document.getElementById('fullname').value.trim();
+const firebaseConfig = {
+  apiKey: "AIzaSyDWSjtJ1X8axYVb6N4xsiZNMC64-Jab0PQ",
+  authDomain: "kazakh-language-course.firebaseapp.com",
+  projectId: "kazakh-language-course",
+  storageBucket: "kazakh-language-course.firebasestorage.app",
+  messagingSenderId: "661860929616",
+  appId: "1:661860929616:web:07f6a588cd90cd67e40155",
+  measurementId: "G-P32VDGB103"
+};
 
-    let email =
-        document.getElementById('email').value.trim();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
 
-    let password =
-        document.getElementById('password').value;
+window.register = async function () {
+  const fullname = document.getElementById("fullname").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const button = document.querySelector(".register-container button");
 
+  if (!fullname || !email || !password) {
+    alert("Барлық өрістерді толтырыңыз!");
+    return;
+  }
 
-    if (
-        fullname === "" ||
-        email === "" ||
-        password === ""
-    ) {
-        alert("Барлық өрістерді толтырыңыз!");
-        return;
-    }
+  if (password.length < 6) {
+    alert("Құпия сөз кемінде 6 таңбадан тұруы керек!");
+    return;
+  }
 
+  button.disabled = true;
+  button.textContent = "Тіркелуде...";
 
-    try {
+  try {
+    const credential = await createUserWithEmailAndPassword(
+      auth, email, password
+    );
 
-        let response = await fetch(
-            'register.php',
-            {
-                method: 'POST',
+    await updateProfile(credential.user, {
+      displayName: fullname
+    });
 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+    await signOut(auth);
 
-                body: JSON.stringify({
-                    fullname: fullname,
-                    email: email,
-                    password: password
-                })
-            }
-        );
+    alert("Тіркелу сәтті аяқталды! Енді аккаунтыңызға кіріңіз.");
+    window.location.href = "login.html";
 
+  } catch (error) {
+    console.error(error);
 
-        let result = await response.json();
+    const messages = {
+      "auth/email-already-in-use": "Бұл email бұрын тіркелген!",
+      "auth/invalid-email": "Email мекенжайы дұрыс емес!",
+      "auth/weak-password": "Құпия сөз тым әлсіз!",
+      "auth/network-request-failed": "Интернет байланысын тексеріңіз!",
+      "auth/operation-not-allowed": "Firebase жүйесінде Email/Password қосылмаған!"
+    };
 
+    alert(messages[error.code] || "Тіркелу қатесі: " + error.code);
 
-        if (result.success) {
-
-            alert(result.message);
-
-            window.location.href =
-                "login.html";
-
-        } else {
-
-            alert(result.message);
-
-        }
-
-
-    } catch (error) {
-
-        console.error(error);
-
-        alert(
-            "Сервермен байланысу кезінде қате пайда болды!"
-        );
-
-    }
-
-}
+  } finally {
+    button.disabled = false;
+    button.textContent = "Тіркелу";
+  }
+};
     </script>
 </body>
 </html>
