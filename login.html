@@ -119,29 +119,84 @@
         <p>Аккаунтыңыз жоқ па? <a href="register.html">Тіркелу</a></p>
         <div class="back-link"><a href="index.html">← Басты бетке</a></div>
     </div>
-    <script>
-        function login() {
-            let email = document.getElementById('email').value;
-            let password = document.getElementById('password').value;
-            if(email === "" || password === "") {
-                alert("Email және құпия сөзді толтырыңыз!");
-                return;
-            }
-            let userData = localStorage.getItem('user_' + email);
-            if(userData) {
-                let user = JSON.parse(userData);
-                if(user.password === password) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                    localStorage.setItem('isLoggedIn', 'true');
-                    alert("Қош келдіңіз, " + user.fullname + "!");
-                    window.location.href = "dashboard.html";
-                } else {
-                    alert("Құпия сөз қате!");
-                }
-            } else {
-                alert("Бұл email-ге тіркелген пайдаланушы жоқ!");
-            }
-        }
-    </script>
+    
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/13.1.0/firebase-app.js";
+import {
+  getAuth,
+  signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/13.1.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDWSjtJ1X8axYVb6N4xsiZNMC64-Jab0PQ",
+  authDomain: "kazakh-language-course.firebaseapp.com",
+  projectId: "kazakh-language-course",
+  storageBucket: "kazakh-language-course.firebasestorage.app",
+  messagingSenderId: "661860929616",
+  appId: "1:661860929616:web:07f6a588cd90cd67e40155",
+  measurementId: "G-P32VDGB103"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+window.login = async function () {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const button = document.querySelector(".login-container button");
+
+  if (!email || !password) {
+    alert("Email және құпия сөзді толтырыңыз!");
+    return;
+  }
+
+  button.disabled = true;
+  button.textContent = "Кіруде...";
+
+  try {
+    const result = await signInWithEmailAndPassword(
+      auth, email, password
+    );
+
+    const user = result.user;
+
+    // Бұрынғы жеке кабинетпен уақытша үйлесімділік
+    const userData = {
+      fullname: user.displayName || "Оқушы",
+      email: user.email,
+      uid: user.uid
+    };
+
+    localStorage.setItem(
+      "currentUser",
+      JSON.stringify(userData)
+    );
+    localStorage.setItem("isLoggedIn", "true");
+
+    alert("Қош келдіңіз, " + userData.fullname + "!");
+    window.location.href = "dashboard.html";
+
+  } catch (error) {
+    console.error(error);
+
+    const messages = {
+      "auth/invalid-credential": "Email немесе құпия сөз қате!",
+      "auth/invalid-email": "Email дұрыс емес!",
+      "auth/user-disabled": "Аккаунт бұғатталған!",
+      "auth/too-many-requests": "Тым көп әрекет жасалды!",
+      "auth/network-request-failed": "Интернет байланысын тексеріңіз!"
+    };
+
+    alert(
+      messages[error.code] ||
+      "Кіру қатесі: " + error.code
+    );
+
+  } finally {
+    button.disabled = false;
+    button.textContent = "Кіру";
+  }
+};
+</script>
 </body>
 </html>
